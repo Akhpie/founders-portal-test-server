@@ -41,6 +41,10 @@ app.use(
 );
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.send("API is running...");
+});
+
 // Connect to Database
 connectDB();
 
@@ -91,9 +95,5 @@ if (process.env.NODE_ENV === "development") {
     res.json(routes);
   });
 }
-
-app.get("/", (req, res) => {
-  res.send("API is running...");
-});
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
