@@ -1,0 +1,242 @@
+/* Modal base styling */
+.ai-chat-modal .ant-modal-content {
+  background: linear-gradient(-180deg, #2f6199 0%, #1a395c 0%, #020a14 100%);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+.ai-chat-modal .ant-modal-header {
+  background: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 16px 24px;
+}
+
+.ai-chat-modal .ant-modal-header .ant-modal-title {
+  color: #e0e6ff;
+}
+
+.ai-chat-modal .ant-modal-header .anticon {
+  color: #4657cb;
+}
+
+.ai-chat-modal .ant-modal-body {
+  background: transparent;
+}
+
+.ai-chat-modal .ant-modal-close {
+  color: #e0e6ff;
+}
+
+.ai-chat-modal .ant-modal-close:hover {
+  color: #ffffff;
+}
+
+/* Card styling */
+.ai-chat-modal .ant-card {
+  background: linear-gradient(145deg, #2328365b 0%, #2a3040af 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ai-chat-modal .ant-card .ant-card-body {
+  color: #e0e6ff;
+}
+
+.ai-chat-modal .ant-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Empty state card */
+.ai-chat-modal .text-center .ant-card {
+  background: linear-gradient(145deg, #1e2333 0%, #252a3d 100%);
+}
+
+.ai-chat-modal .text-center .ant-card .anticon {
+  color: #4657cb;
+}
+
+.ai-chat-modal .text-center .ant-card .ant-typography {
+  color: #b8c0e0;
+}
+
+/* Message content styling */
+.ai-chat-modal .markdown-content {
+  color: #e0e6ff;
+}
+
+.ai-chat-modal .markdown-content a {
+  color: #4657cb;
+}
+
+.ai-chat-modal .markdown-content a:hover {
+  color: #5668dc;
+}
+
+.ai-chat-modal .markdown-content code {
+  background: rgba(255, 255, 255, 0.1);
+  color: #b8c0e0;
+  border-radius: 4px;
+  padding: 2px 6px;
+}
+
+.ai-chat-modal .markdown-content pre {
+  background: #1a1f2e;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ai-chat-modal .markdown-content table {
+  background: rgba(26, 31, 46, 0.6);
+}
+
+.ai-chat-modal .markdown-content th {
+  background: rgba(70, 87, 203, 0.2);
+  color: #e0e6ff;
+}
+
+.ai-chat-modal .markdown-content td {
+  color: #b8c0e0;
+}
+
+/* Input area styling */
+
+.ai-chat-modal .ant-input-search {
+  display: flex;
+  gap: 8px;
+}
+
+.ai-chat-modal .ant-input-search .ant-input-wrapper {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.ai-chat-modal .ant-input-search .ant-input {
+  height: 44px;
+  padding: 0 16px;
+  font-size: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-right: none;
+  color: #e0e6ff;
+  border-radius: 8px !important;
+}
+.ai-chat-modal .ant-input-search .ant-input-group-addon {
+  background: transparent;
+}
+
+.ai-chat-modal .ant-input-search .ant-input-search-button {
+  height: 44px;
+  width: 54px !important;
+  margin-left: 8px;
+  border-radius: 8px !important;
+  border: none !important;
+  transition: all 0.3s ease;
+}
+
+.ai-chat-modal .ant-input-search .ant-input-search-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(70, 87, 203, 0.2);
+  border-radius: 0 8px 8px 0 !important;
+}
+
+.ai-chat-modal .ant-input-search .ant-input:focus {
+  box-shadow: none;
+  border-color: #4657cb;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.ai-chat-modal .ant-input-search .anticon-send {
+  font-size: 18px;
+}
+
+/* AutoComplete dropdown styling */
+.ai-chat-modal .ant-select-dropdown {
+  background: linear-gradient(145deg, #232836 0%, #2a3040 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.ai-chat-modal .ant-select-item {
+  color: #e0e6ff;
+  padding: 8px 16px;
+}
+
+.ai-chat-modal .ant-select-item-option-active {
+  background: rgba(70, 87, 203, 0.2);
+}
+
+.ai-chat-modal .ant-select-item-option-selected {
+  background: rgba(70, 87, 203, 0.3);
+}
+
+/* Avatar styling */
+.ai-chat-modal .ant-avatar.bg-blue-500 {
+  background: linear-gradient(135deg, #4657cb 0%, #2b3366 100%);
+}
+
+.ai-chat-modal .ant-avatar.bg-green-500 {
+  background: linear-gradient(135deg, #34d399 0%, #059669 100%);
+}
+
+/* Custom scrollbar */
+.ai-chat-modal .custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.ai-chat-modal .custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+.ai-chat-modal .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #4657cb 0%, #2b3366 100%);
+  border-radius: 4px;
+}
+
+.ai-chat-modal .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #5668dc 0%, #3c4477 100%);
+}
+
+/* Button styling */
+.ai-chat-modal .ant-btn-text {
+  color: #e0e6ff;
+}
+
+.ai-chat-modal .ant-btn-text:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+/* Dropdown menu styling */
+.ai-chat-modal .ant-dropdown-menu {
+  background: linear-gradient(145deg, #232836 0%, #2a3040 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ai-chat-modal .ant-dropdown-menu-item {
+  color: #e0e6ff;
+}
+
+.ai-chat-modal .ant-dropdown-menu-item:hover {
+  background: rgba(70, 87, 203, 0.2);
+}
+
+/* Alert styling */
+.ai-chat-modal .ant-alert-error {
+  background: rgba(220, 38, 38, 0.1);
+  border: 1px solid rgba(220, 38, 38, 0.3);
+}
+
+.ai-chat-modal .ant-alert-error .ant-alert-message {
+  color: #ef4444;
+}
+
+.ai-chat-modal .ant-alert-error .ant-alert-description {
+  color: #fca5a5;
+}
+
+/* Transition effects */
+.ai-chat-modal .ant-card,
+.ai-chat-modal .ant-btn,
+.ai-chat-modal .ant-input {
+  transition: all 0.3s ease;
+}

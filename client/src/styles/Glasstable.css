@@ -1,0 +1,33 @@
+.glassmorphic-table .ant-table {
+  background: transparent !important;
+}
+
+.glassmorphic-table .ant-table-thead > tr > th {
+  background: rgba(42, 29, 90, 0.1) !important;
+  backdrop-filter: blur(4px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  color: inherit;
+}
+
+.glassmorphic-table .ant-table-tbody > tr > td {
+  background: transparent !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glassmorphic-table .ant-table-tbody > tr:hover > td {
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+.glassmorphic-table .ant-pagination-item {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glassmorphic-table .ant-pagination-item-active {
+  background: rgba(12, 12, 12, 0.3);
+}
+
+.glassmorphic-table .ant-table-cell {
+  color: inherit;
+}

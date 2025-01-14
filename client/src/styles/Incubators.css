@@ -1,0 +1,47 @@
+.dark-mode-modal {
+  .ant-modal-content {
+    background-color: #1f1f1f;
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(17, 25, 40, 0.75);
+    border-radius: 12px;
+  }
+
+  .ant-modal-close {
+    color: rgba(255, 255, 255, 0.45);
+    &:hover {
+      color: rgba(255, 255, 255, 0.85);
+    }
+  }
+}
+
+.map-modal .ant-modal-content {
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background-color: rgba(17, 25, 40, 0.75);
+  border: 0.5px solid grey;
+}
+.map-modal .ant-modal-header {
+  background: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ant-tooltip {
+  --tooltip-bg: rgba(15, 23, 42, 0.8);
+}
+
+.ant-tooltip .ant-tooltip-inner {
+  background: var(--tooltip-bg);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 8px 12px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  font-size: 0.875rem;
+}
+
+.ant-tooltip .ant-tooltip-arrow-content {
+  background: var(--tooltip-bg);
+  backdrop-filter: blur(8px);
+}

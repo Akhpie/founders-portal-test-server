@@ -1,0 +1,300 @@
+/* //!new css */
+
+/* Modern Login Page Styling */
+.login-bg {
+  background: linear-gradient(125deg, #000428 0%, #004e92 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* //!trial */
+
+.login-bg {
+  background: linear-gradient(
+    125deg,
+    #0f1221 0%,
+    #1a2151 25%,
+    #0f3f80 50%,
+    #164773 75%,
+    #1e4d8b 100%
+  );
+  position: relative;
+  overflow: hidden;
+  background-size: 400% 400%;
+  animation: gradientFlow 15s ease infinite;
+}
+
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.login-bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: linear-gradient(125deg, transparent 40%, rgba(0, 255, 255, 0.05)),
+    linear-gradient(-125deg, transparent 40%, rgba(255, 0, 255, 0.05)),
+    radial-gradient(
+      circle at 25% 25%,
+      rgba(0, 255, 255, 0.1) 0%,
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 75% 75%,
+      rgba(255, 0, 255, 0.1) 0%,
+      transparent 45%
+    );
+  animation: glowPulse 8s ease-in-out infinite alternate;
+}
+
+@keyframes glowPulse {
+  0% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Optional: Add animated grid lines */
+.login-bg::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none; /* Add this */
+  z-index: 0; /* Add this */
+  right: 0;
+  bottom: 0;
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.05) 1px,
+      transparent 1px
+    ),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: gridMove 15s linear infinite;
+  opacity: 0.2;
+}
+
+@keyframes gridMove {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(50px);
+  }
+}
+
+/* //! Glass Card Effect */
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 24px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.05) !important;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.glass-card::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.1) 0%,
+    transparent 60%
+  );
+  pointer-events: none;
+}
+
+.glass-card .ant-card-body {
+  padding: 40px !important;
+}
+
+/* Title Styling */
+.glass-card .ant-typography {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 2rem !important;
+}
+
+/* Input Fields */
+.glass-card .ant-input-affix-wrapper {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 8px !important;
+  padding: 8px 16px !important;
+  transition: all 0.3s ease;
+}
+
+.glass-card .ant-input-affix-wrapper:hover,
+.glass-card .ant-input-affix-wrapper:focus,
+.glass-card .ant-input-affix-wrapper-focused {
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1) !important;
+}
+
+.glass-card .ant-input {
+  background: transparent !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.glass-card .ant-input::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Icons in Input */
+.glass-card .anticon {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Login Button */
+.glass-card .ant-btn-primary {
+  background: linear-gradient(135deg, #4657cb 0%, #2b3366 100%) !important;
+  border: none !important;
+  height: 45px !important;
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+  font-size: 16px !important;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 15px rgba(70, 87, 203, 0.3) !important;
+  transition: all 0.3s ease !important;
+}
+
+.glass-card .ant-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(70, 87, 203, 0.4) !important;
+  background: linear-gradient(135deg, #5668dc 0%, #3c4477 100%) !important;
+}
+
+/* Remember Me Checkbox */
+.glass-card .ant-checkbox-wrapper {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.glass-card .ant-checkbox-checked .ant-checkbox-inner {
+  background-color: #4657cb !important;
+  border-color: #4657cb !important;
+}
+
+/* Divider */
+.glass-card .ant-divider {
+  color: rgba(255, 255, 255, 0.6) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+.ant-checkbox-wrapper {
+  display: flex !important;
+  align-items: center !important;
+}
+
+.ant-checkbox {
+  top: 0 !important;
+}
+
+/* Links */
+.glass-card .ant-typography-link {
+  color: #4657cb !important;
+  transition: color 0.3s ease;
+}
+
+.glass-card .ant-typography-link:hover {
+  color: #5668dc !important;
+}
+
+/* Register Button */
+.custom-register-btn {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
+  padding: 10px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.custom-register-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.glass-card .ant-checkbox-wrapper {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Modal Styling */
+.ant-modal {
+  padding-bottom: 0;
+}
+
+.ant-modal-content {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.ant-modal-header {
+  background: transparent;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 24px 24px 16px;
+  border-radius: 16px 16px 0 0;
+}
+
+.ant-modal-title {
+  color: #1a1f38;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.ant-modal-body {
+  padding: 24px;
+}
+
+.ant-modal-footer {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 16px 24px;
+  border-radius: 0 0 16px 16px;
+}
+
+/* 2FA Input */
+.text-center.text-lg.tracking-wide {
+  letter-spacing: 4px;
+  font-family: monospace;
+}
+
+/* Error Message */
+.ant-message-error .anticon {
+  color: #ff4d4f !important;
+}
+
+/* Success Message */
+.ant-message-success .anticon {
+  color: #52c41a !important;
+}

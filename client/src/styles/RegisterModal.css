@@ -1,0 +1,131 @@
+.register-modal {
+  background: transparent;
+}
+
+.register-modal .ant-modal-content {
+  background: rgba(0, 7, 71, 0.1) !important;
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.register-modal .ant-modal-header {
+  background: transparent !important;
+}
+
+.register-modal .ant-modal-title {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-size: 20px !important;
+  font-weight: 600 !important;
+}
+
+.register-modal .ant-modal-close {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.register-modal .ant-steps-item-title {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.register-modal .ant-form-item label {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Specific fix for prefix icon inputs */
+.register-modal .ant-input-affix-wrapper {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.register-modal .ant-input-affix-wrapper .ant-input {
+  background: transparent !important;
+  border: none !important;
+}
+
+.register-modal .ant-input-affix-wrapper .ant-input-prefix {
+  margin-right: 8px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Base styles for all inputs */
+.register-modal .ant-input,
+.register-modal .ant-input-password,
+.register-modal .ant-select-selector,
+.register-modal .ant-input-number,
+.register-modal .ant-input-textarea {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.register-modal .ant-input-affix-wrapper .ant-input-prefix {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.register-modal .ant-input::placeholder,
+.register-modal .ant-input-password input::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.register-modal .ant-select-selection-placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.register-modal .ant-btn {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.register-modal .ant-btn-primary {
+  background: rgba(24, 144, 255, 0.8);
+  border: none;
+}
+
+.register-modal .ant-btn-primary:hover {
+  background: rgba(24, 144, 255, 0.9);
+}
+
+.register-modal .ant-select-dropdown {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.register-modal .ant-select-item {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.register-modal .ant-select-item-option-selected {
+  background: rgba(24, 144, 255, 0.3);
+}
+
+.register-modal .ant-select-item-option-active {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.enhance-text-btn {
+  width: 24px;
+  height: 24px;
+  filter: invert(1) opacity(0.8);
+}
+
+.register-modal .ant-progress-text {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Transitions */
+.register-modal .ant-input,
+.register-modal .ant-select-selector,
+.register-modal .ant-btn,
+.register-modal .ant-input-affix-wrapper {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Hover effects */
+.register-modal .ant-input:hover,
+.register-modal .ant-input-password:hover,
+.register-modal .ant-select-selector:hover,
+.register-modal .ant-input-affix-wrapper:hover {
+  border-color: rgba(255, 255, 255, 0.3) !important;
+}
