@@ -135,7 +135,7 @@ const AdminLogin: React.FC = () => {
           body: JSON.stringify({
             credential: credentialResponse.credential,
           }),
-          credentials: "include",
+          // credentials: "include",
           mode: "cors",
         }
       );
