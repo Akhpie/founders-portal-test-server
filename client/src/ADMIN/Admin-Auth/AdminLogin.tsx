@@ -115,7 +115,7 @@ import { useNavigate } from "react-router-dom";
 import { Card, message } from "antd";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 
-const GOOGLE_CLIENT_ID = import.meta.env.VITE_ADMIN_GOOGLE_CLIENT_ID;
+const GOOGLE_CLIENT_ID = import.meta.env.VITE_ADMIN_PRODUCTION_GOOGLE_CLIENT_ID;
 
 const AdminLogin: React.FC = () => {
   const navigate = useNavigate();
@@ -135,7 +135,7 @@ const AdminLogin: React.FC = () => {
           body: JSON.stringify({
             credential: credentialResponse.credential,
           }),
-          // credentials: "include",
+          credentials: "include",
           mode: "cors",
         }
       );
