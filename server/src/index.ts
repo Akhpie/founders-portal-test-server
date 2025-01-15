@@ -25,9 +25,8 @@ import seedRoutes from "./routes/Seed-Routes/seedRoutes";
 
 dotenv.config();
 
-const allowedOrigins = [
-  "https://founders-portal-test-server-client.onrender.com",
-];
+const allowedOrigins =
+  "https://founders-portal-test-server-client.onrender.com";
 const app = express();
 const PORT = process.env.PORT || 5000;
 
