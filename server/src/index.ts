@@ -40,15 +40,6 @@ app.use(
   })
 );
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Credentials", "true");
-  res.header(
-    "Access-Control-Allow-Origin",
-    "https://founders-portal-test-server-client.onrender.com"
-  );
-  next();
-});
-
 app.use(express.json());
 
 app.get("/", (req, res) => {
