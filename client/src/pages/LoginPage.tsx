@@ -80,7 +80,7 @@ export default function LoginPage() {
       } catch (firstError) {
         console.log("Trying visitor login...");
         const visitorResponse = await axios.post(
-          "http://localhost:5000/api/visitor/login",
+          "https://founders-portal-test-server-apii.onrender.com/api/visitor/login",
           {
             email: values.email,
             password: values.password,
@@ -110,7 +110,7 @@ export default function LoginPage() {
 
     try {
       const endpoint = tempToken.includes("visitor")
-        ? "http://localhost:5000/api/visitor/login"
+        ? "https://founders-portal-test-server-apii.onrender.com/api/visitor/login"
         : "http://localhost:5000/api/login";
 
       const response = await axios.post(endpoint, {
