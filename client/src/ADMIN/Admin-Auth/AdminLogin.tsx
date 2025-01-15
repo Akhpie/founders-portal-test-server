@@ -125,7 +125,7 @@ const AdminLogin: React.FC = () => {
     setLoading(true);
     try {
       const response = await fetch(
-        "http://localhost:5000/api/auth/google-login",
+        "https://founders-portal-test-server-apii.onrender.com/api/auth/google-login",
         {
           // Update with your actual backend URL
           method: "POST",

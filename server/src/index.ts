@@ -36,6 +36,7 @@ app.use(
     origin: [
       "http://localhost:5173",
       "https://founders-portal-test-server-5eyl.vercel.app/",
+      "https://founders-portal-test-server-client.onrender.com/",
     ],
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
