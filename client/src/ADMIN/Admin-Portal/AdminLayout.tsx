@@ -230,7 +230,9 @@ export default function AdminLayout() {
   );
 
   return (
-    <GoogleOAuthProvider clientId={import.meta.env.VITE_ADMIN_GOOGLE_CLIENT_ID}>
+    <GoogleOAuthProvider
+      clientId={import.meta.env.VITE_ADMIN_PRODUCTION_GOOGLE_CLIENT_ID}
+    >
       <Layout style={{ minHeight: "100vh" }}>
         {/* Sidebar */}
         <Sider
