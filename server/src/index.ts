@@ -44,18 +44,16 @@ app.use(cookieParser());
 // );
 app.use(
   cors({
-    origin: function (origin: any, callback: any) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
+    origin: "https://founders-portal-test-server-client.onrender.com", // Exact frontend URL
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
     exposedHeaders: ["set-cookie"],
+    preflightContinue: true, // Add this
   })
 );
+
+app.options("*", cors());
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Credentials", "true");
