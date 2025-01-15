@@ -25,20 +25,47 @@ import seedRoutes from "./routes/Seed-Routes/seedRoutes";
 
 dotenv.config();
 
+const allowedOrigins = [
+  "https://founders-portal-test-server-client.onrender.com",
+];
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(cookieParser());
 
 // Middleware
+// app.use(
+//   cors({
+//     origin: "https://founders-portal-test-server-client.onrender.com",
+//     credentials: true,
+//     allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
+//     exposedHeaders: ["set-cookie"],
+//   })
+// );
 app.use(
   cors({
-    origin: "https://founders-portal-test-server-client.onrender.com",
+    origin: function (origin: any, callback: any) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
     exposedHeaders: ["set-cookie"],
   })
 );
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.header(
+    "Access-Control-Allow-Origin",
+    "https://founders-portal-test-server-client.onrender.com"
+  );
+  next();
+});
+
 app.use(express.json());
 
 app.get("/", (req, res) => {
