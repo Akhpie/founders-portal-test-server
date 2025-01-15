@@ -33,7 +33,7 @@ app.use(cookieParser());
 // Middleware
 app.use(
   cors({
-    origin: ["https://founders-portal-test-server-client.onrender.com"],
+    origin: "https://founders-portal-test-server-client.onrender.com",
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
     exposedHeaders: ["set-cookie"],
