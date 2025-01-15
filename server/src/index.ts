@@ -25,25 +25,15 @@ import seedRoutes from "./routes/Seed-Routes/seedRoutes";
 
 dotenv.config();
 
-const allowedOrigins =
-  "https://founders-portal-test-server-client.onrender.com";
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(cookieParser());
 
 // Middleware
-// app.use(
-//   cors({
-//     origin: "https://founders-portal-test-server-client.onrender.com",
-//     credentials: true,
-//     allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
-//     exposedHeaders: ["set-cookie"],
-//   })
-// );
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: "https://founders-portal-test-server-client.onrender.com",
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
     exposedHeaders: ["set-cookie"],

@@ -124,10 +124,6 @@ const AdminLogin: React.FC = () => {
   const handleGoogleSuccess = async (credentialResponse: any) => {
     setLoading(true);
     try {
-      console.log(
-        "Sending request to:",
-        "https://founders-portal-test-server-apii.onrender.com/api/auth/google-login"
-      );
       const response = await fetch(
         "https://founders-portal-test-server-apii.onrender.com/api/auth/google-login",
         {
