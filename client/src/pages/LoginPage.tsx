@@ -62,10 +62,13 @@ export default function LoginPage() {
 
       // Try both user types in sequence
       try {
-        const response = await axios.post("http://localhost:5000/api/login", {
-          email: values.email,
-          password: values.password,
-        });
+        const response = await axios.post(
+          "https://founders-portal-test-server-apii.onrender.com/api/login",
+          {
+            email: values.email,
+            password: values.password,
+          }
+        );
 
         console.log("Login response:", response.data);
 
@@ -111,7 +114,7 @@ export default function LoginPage() {
     try {
       const endpoint = tempToken.includes("visitor")
         ? "https://founders-portal-test-server-apii.onrender.com/api/visitor/login"
-        : "http://localhost:5000/api/login";
+        : "https://founders-portal-test-server-apii.onrender.com/api/login";
 
       const response = await axios.post(endpoint, {
         email: loginCredentials.email,
