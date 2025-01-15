@@ -67,7 +67,7 @@ const Notifications = () => {
   }, []);
 
   const getNotificationsEndpoint = () => {
-    const baseUrl = "http://localhost:5000/api";
+    const baseUrl = "https://founders-portal-test-server-apii.onrender.com/api";
     return userType === "visitor"
       ? `${baseUrl}/visitor/notifications`
       : `${baseUrl}/notifications`;

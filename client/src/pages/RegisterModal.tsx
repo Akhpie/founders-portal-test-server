@@ -54,7 +54,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ visible, onClose }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/ai/enhance-text",
+        "https://founders-portal-test-server-apii.onrender.com/api/ai/enhance-text",
         {
           text: currentDescription,
         }
@@ -113,8 +113,8 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ visible, onClose }) => {
 
       const endpoint =
         userType === "founder"
-          ? "http://localhost:5000/api/register"
-          : "http://localhost:5000/api/register-visitor";
+          ? "https://founders-portal-test-server-apii.onrender.com/api/register"
+          : "https://founders-portal-test-server-apii.onrender.com/api/register-visitor";
 
       const response = await axios.post(endpoint, finalData, {
         headers: { "Content-Type": "application/json" },

@@ -82,7 +82,7 @@ export default function AdminLayout() {
   const fetchAdminInfo = async () => {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/auth/current-user",
+        "https://founders-portal-test-server-apii.onrender.com/api/auth/current-user",
         {
           credentials: "include",
           headers: {
@@ -132,13 +132,16 @@ export default function AdminLayout() {
       }
 
       // Backend logout
-      const response = await fetch("http://localhost:5000/api/auth/logout", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        "https://founders-portal-test-server-apii.onrender.com/api/auth/logout",
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Logout failed");

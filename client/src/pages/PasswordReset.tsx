@@ -53,7 +53,7 @@ const ResetPasswordPage = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/reset-password",
+        "https://founders-portal-test-server-apii.onrender.com/api/reset-password",
         { token, newPassword: values.newPassword }
       );
 

@@ -25,7 +25,7 @@ export default function Checklist() {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        "http://localhost:5000/api/check/getcheck",
+        "https://founders-portal-test-server-apii.onrender.com/api/check/getcheck",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -34,7 +34,7 @@ export default function Checklist() {
       if (response.data.data.length === 0) {
         // Initialize checklist if empty
         const initResponse = await axios.post(
-          "http://localhost:5000/api/check/checklist/initialize",
+          "https://founders-portal-test-server-apii.onrender.com/api/check/checklist/initialize",
           {},
           {
             headers: { Authorization: `Bearer ${token}` },
@@ -55,7 +55,7 @@ export default function Checklist() {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.patch(
-        `http://localhost:5000/api/check/checklist/${id}`,
+        `https://founders-portal-test-server-apii.onrender.com/api/check/checklist/${id}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );

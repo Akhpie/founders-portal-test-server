@@ -55,7 +55,9 @@ const TemplateManager: React.FC = () => {
 
   const fetchTemplates = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/templates");
+      const response = await axios.get(
+        "https://founders-portal-test-server-apii.onrender.com/api/templates"
+      );
       const customTemplates = response.data.data;
       setTemplates([...defaultTemplates, ...customTemplates]);
     } catch (error) {
@@ -73,16 +75,22 @@ const TemplateManager: React.FC = () => {
           name: `${values.name} (Copy)`,
           isDefault: false,
         };
-        await axios.post("http://localhost:5000/api/templates", newTemplate);
+        await axios.post(
+          "https://founders-portal-test-server-apii.onrender.com/api/templates",
+          newTemplate
+        );
         message.success("Template cloned successfully");
       } else if (selectedTemplate) {
         await axios.put(
-          `http://localhost:5000/api/templates/${selectedTemplate._id}`,
+          `https://founders-portal-test-server-apii.onrender.com/api/templates/${selectedTemplate._id}`,
           values
         );
         message.success("Template updated successfully");
       } else {
-        await axios.post("http://localhost:5000/api/templates", values);
+        await axios.post(
+          "https://founders-portal-test-server-apii.onrender.com/api/templates",
+          values
+        );
         message.success("Template saved successfully");
       }
       setModalVisible(false);
@@ -97,7 +105,9 @@ const TemplateManager: React.FC = () => {
 
   const handleDelete = async (id: string) => {
     try {
-      await axios.delete(`http://localhost:5000/api/templates/${id}`);
+      await axios.delete(
+        `https://founders-portal-test-server-apii.onrender.com/api/templates/${id}`
+      );
       message.success("Template deleted successfully");
       fetchTemplates();
     } catch (error) {

@@ -41,7 +41,7 @@ export default function ChecklistManagement() {
   const fetchChecklist = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/check/admin/checklist"
+        "https://founders-portal-test-server-apii.onrender.com/api/check/admin/checklist"
       );
       setItems(response.data.data);
     } catch (error) {
@@ -57,7 +57,7 @@ export default function ChecklistManagement() {
       if (editingItem) {
         // Edit existing item
         const response = await axios.put(
-          `http://localhost:5000/api/check/admin/checklist/${editingItem._id}`,
+          `https://founders-portal-test-server-apii.onrender.com/api/check/admin/checklist/${editingItem._id}`,
           values
         );
         setItems(
@@ -69,7 +69,7 @@ export default function ChecklistManagement() {
       } else {
         // Add new item
         const response = await axios.post(
-          "http://localhost:5000/api/check/admin/checklist",
+          "https://founders-portal-test-server-apii.onrender.com/api/check/admin/checklist",
           values
         );
         setItems([...items, response.data.data]);
@@ -85,7 +85,7 @@ export default function ChecklistManagement() {
   const handleDelete = async (id: string) => {
     try {
       await axios.delete(
-        `http://localhost:5000/api/check/admin/checklist/${id}`
+        `https://founders-portal-test-server-apii.onrender.com/api/check/admin/checklist/${id}`
       );
       setItems(items.filter((item) => item._id !== id));
       message.success("Item deleted successfully");

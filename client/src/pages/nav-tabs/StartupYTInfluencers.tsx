@@ -52,7 +52,9 @@ const StartupYTInfluencers = () => {
   const fetchInfluencers = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("http://localhost:5000/api/influencers");
+      const response = await axios.get(
+        "https://founders-portal-test-server-apii.onrender.com/api/influencers"
+      );
       setInfluencers(response.data);
     } catch (error) {
       console.error("Error fetching influencers:", error);

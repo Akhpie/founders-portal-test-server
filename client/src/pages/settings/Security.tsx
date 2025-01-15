@@ -42,7 +42,7 @@ export default function Security() {
       if (userType === "founder") {
         try {
           const response = await axios.get(
-            "http://localhost:5000/api/twofa/2fa-status",
+            "https://founders-portal-test-server-apii.onrender.com/api/twofa/2fa-status",
             {
               headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -67,8 +67,8 @@ export default function Security() {
     try {
       const endpoint =
         userType === "visitor"
-          ? "http://localhost:5000/api/visitor/update-password"
-          : "http://localhost:5000/api/twofa/update-password";
+          ? "https://founders-portal-test-server-apii.onrender.com/api/visitor/update-password"
+          : "https://founders-portal-test-server-apii.onrender.com/api/twofa/update-password";
 
       const response = await axios.post(
         endpoint,
@@ -102,8 +102,8 @@ export default function Security() {
       try {
         const endpoint =
           userType === "visitor"
-            ? "http://localhost:5000/api/visitor/setup-2fa"
-            : "http://localhost:5000/api/twofa/setup-2fa";
+            ? "https://founders-portal-test-server-apii.onrender.com/api/visitor/setup-2fa"
+            : "https://founders-portal-test-server-apii.onrender.com/api/twofa/setup-2fa";
 
         const response = await axios.post(
           endpoint,
@@ -128,8 +128,8 @@ export default function Security() {
       try {
         const endpoint =
           userType === "visitor"
-            ? "http://localhost:5000/api/visitor/disable-2fa"
-            : "http://localhost:5000/api/twofa/disable-2fa";
+            ? "https://founders-portal-test-server-apii.onrender.com/api/visitor/disable-2fa"
+            : "https://founders-portal-test-server-apii.onrender.com/api/twofa/disable-2fa";
 
         const response = await axios.post(
           endpoint,
@@ -155,8 +155,8 @@ export default function Security() {
     try {
       const endpoint =
         userType === "visitor"
-          ? "http://localhost:5000/api/visitor/verify-2fa-setup"
-          : "http://localhost:5000/api/twofa/verify-2fa-setup";
+          ? "https://founders-portal-test-server-apii.onrender.com/api/visitor/verify-2fa-setup"
+          : "https://founders-portal-test-server-apii.onrender.com/api/twofa/verify-2fa-setup";
 
       const response = await axios.post(
         endpoint,

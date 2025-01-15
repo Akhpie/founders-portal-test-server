@@ -90,7 +90,7 @@ export default function PortalLayout() {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        "http://localhost:5000/api/check/getcheck",
+        "https://founders-portal-test-server-apii.onrender.com/api/check/getcheck",
         {
           headers: { Authorization: `Bearer ${token}` },
         }

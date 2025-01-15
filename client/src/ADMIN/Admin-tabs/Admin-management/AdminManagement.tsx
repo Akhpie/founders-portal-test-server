@@ -54,7 +54,7 @@ const AdminManagement: React.FC = () => {
   const fetchCurrentUserRole = async () => {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/auth/current-user",
+        "https://founders-portal-test-server-apii.onrender.com/api/auth/current-user",
         {
           credentials: "include",
           headers: {
@@ -76,7 +76,7 @@ const AdminManagement: React.FC = () => {
   //   setLoading(true);
   //   try {
   //     const response = await fetch(
-  //       "http://localhost:5000/api/admin/admin-users",
+  //       "https://founders-portal-test-server-apii.onrender.com/api/admin/admin-users",
   //       {
   //         credentials: "include",
   //       }
@@ -95,7 +95,7 @@ const AdminManagement: React.FC = () => {
     try {
       console.log("Fetching admins...");
       const response = await fetch(
-        "http://localhost:5000/api/admin/admin-users",
+        "https://founders-portal-test-server-apii.onrender.com/api/admin/admin-users",
         {
           credentials: "include",
           headers: {
@@ -132,8 +132,8 @@ const AdminManagement: React.FC = () => {
   const handleAddEdit = async (values: any) => {
     try {
       const url = editingId
-        ? `http://localhost:5000/api/admin/admin-users/${editingId}`
-        : "http://localhost:5000/api/admin/admin-users";
+        ? `https://founders-portal-test-server-apii.onrender.com/api/admin/admin-users/${editingId}`
+        : "https://founders-portal-test-server-apii.onrender.com/api/admin/admin-users";
 
       const method = editingId ? "PUT" : "POST";
 
@@ -170,7 +170,7 @@ const AdminManagement: React.FC = () => {
   const handleDelete = async (id: string) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/admin/admin-users/${id}`,
+        `https://founders-portal-test-server-apii.onrender.com/api/admin/admin-users/${id}`,
         {
           method: "DELETE",
           credentials: "include",

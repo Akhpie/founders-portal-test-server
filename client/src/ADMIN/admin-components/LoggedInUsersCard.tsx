@@ -21,7 +21,7 @@ const LoggedInUsersCard = () => {
     const fetchLoggedInUsers = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/logged-in-users"
+          "https://founders-portal-test-server-apii.onrender.com/api/logged-in-users"
         );
         if (response.data.success) {
           setLoggedInUsers(response.data.data);

@@ -28,7 +28,7 @@
 
 //       try {
 //         const response = await axios.get(
-//           `http://localhost:5000/api/verify-email?token=${token}`
+//           `https://founders-portal-test-server-apii.onrender.com/api/verify-email?token=${token}`
 //         );
 
 //         if (response.data.success) {
@@ -162,7 +162,7 @@ const VerifyEmail: React.FC = () => {
         console.log("Attempting to verify email with token:", token);
 
         const response = await axios.get(
-          `http://localhost:5000/api/verify-email?token=${token}`,
+          `https://founders-portal-test-server-apii.onrender.com/api/verify-email?token=${token}`,
           {
             validateStatus: function (status) {
               return status < 500; // Resolve only if the status code is less than 500

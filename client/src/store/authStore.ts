@@ -35,7 +35,9 @@ export const useAuthStore = create<AuthState>((set) => ({
       if (token) {
         // Make the logout API call with the all parameter if needed
         await axios.post(
-          `http://localhost:5000/api/logout${logoutFromAll ? "?all=true" : ""}`,
+          `https://founders-portal-test-server-apii.onrender.com/api/logout${
+            logoutFromAll ? "?all=true" : ""
+          }`,
           {},
           {
             headers: {

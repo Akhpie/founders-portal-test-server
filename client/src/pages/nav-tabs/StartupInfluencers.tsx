@@ -53,7 +53,7 @@ const StartupInfluencers = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/startup-influencers"
+        "https://founders-portal-test-server-apii.onrender.com/api/startup-influencers"
       );
       setInfluencers(response.data);
     } catch (error) {

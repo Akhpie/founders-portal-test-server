@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5000";
+const API_URL = "https://founders-portal-test-server-apii.onrender.com";
 
 export interface FAQ {
   _id: string;

@@ -36,8 +36,8 @@ const Profile: React.FC = () => {
         // Choose endpoint based on user type
         const endpoint =
           storedUserType === "visitor"
-            ? "http://localhost:5000/api/visitor/profile"
-            : "http://localhost:5000/api/profile";
+            ? "https://founders-portal-test-server-apii.onrender.com/api/visitor/profile"
+            : "https://founders-portal-test-server-apii.onrender.com/api/profile";
 
         const response = await axios.get(endpoint, {
           headers: {
@@ -66,8 +66,8 @@ const Profile: React.FC = () => {
       // Choose endpoint based on user type
       const endpoint =
         userType === "visitor"
-          ? "http://localhost:5000/api/visitor/profile-update"
-          : "http://localhost:5000/api/profile-update";
+          ? "https://founders-portal-test-server-apii.onrender.com/api/visitor/profile-update"
+          : "https://founders-portal-test-server-apii.onrender.com/api/profile-update";
 
       const response = await axios.put(endpoint, updatedData, {
         headers: {
@@ -114,8 +114,8 @@ const Profile: React.FC = () => {
       // Choose endpoint based on user type
       const endpoint =
         currentUserType === "visitor"
-          ? "http://localhost:5000/api/visitor/delete-account"
-          : "http://localhost:5000/api/twofa/delete-account";
+          ? "https://founders-portal-test-server-apii.onrender.com/api/visitor/delete-account"
+          : "https://founders-portal-test-server-apii.onrender.com/api/twofa/delete-account";
 
       await axios.delete(endpoint, {
         headers: {

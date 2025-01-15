@@ -78,7 +78,7 @@ const UserAnalytics = () => {
     setChartLoading(true);
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/user/user-growth"
+        "https://founders-portal-test-server-apii.onrender.com/api/user/user-growth"
       );
       if (response.data.success) {
         const processedData = processGrowthData(response.data.data);
@@ -128,7 +128,7 @@ const UserAnalytics = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/logged-in-users"
+        "https://founders-portal-test-server-apii.onrender.com/api/logged-in-users"
       );
       if (response.data.success) {
         setActiveUsers(response.data.data);

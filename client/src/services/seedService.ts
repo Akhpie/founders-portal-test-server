@@ -1,7 +1,7 @@
 import axios from "axios";
 import { SeedTypes } from "../types/seed";
 
-const API_URL = "http://localhost:5000";
+const API_URL = "https://founders-portal-test-server-apii.onrender.com";
 
 export interface ApiResponse<T> {
   success: boolean;

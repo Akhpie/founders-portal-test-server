@@ -24,7 +24,7 @@ const AITextEnhancer: React.FC<AITextEnhancerProps> = ({
 
     try {
       const response = await axios.post<{ enhancedText: string }>(
-        `http://localhost:5000/api/ai/enhance-text`,
+        `https://founders-portal-test-server-apii.onrender.com/api/ai/enhance-text`,
         { text: value }
       );
 

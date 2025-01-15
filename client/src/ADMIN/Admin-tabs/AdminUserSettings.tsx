@@ -118,7 +118,7 @@ const AdminUserSettings: React.FC = () => {
   const fetchCurrentAdminRole = async () => {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/auth/current-user",
+        "https://founders-portal-test-server-apii.onrender.com/api/auth/current-user",
         {
           credentials: "include",
         }
@@ -135,7 +135,7 @@ const AdminUserSettings: React.FC = () => {
   const fetchUserNotifications = async (email: string) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/user/notifications/${email}`
+        `https://founders-portal-test-server-apii.onrender.com/api/user/notifications/${email}`
       );
       return response.data.success ? response.data.data : null;
     } catch (error) {
@@ -148,7 +148,7 @@ const AdminUserSettings: React.FC = () => {
   const setupTwoFactor = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/user/setup-2fa"
+        "https://founders-portal-test-server-apii.onrender.com/api/user/setup-2fa"
       );
       if (response.data.success) {
         setQrCodeData(response.data.data);
@@ -165,7 +165,7 @@ const AdminUserSettings: React.FC = () => {
   const verifyTwoFactorCode = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/user/verify-2fa",
+        "https://founders-portal-test-server-apii.onrender.com/api/user/verify-2fa",
         {
           token: verificationCode,
           secret: qrCodeData?.secret,
@@ -192,7 +192,7 @@ const AdminUserSettings: React.FC = () => {
   const handleFinalConfirmation = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/user/verify-2fa",
+        "https://founders-portal-test-server-apii.onrender.com/api/user/verify-2fa",
         {
           token: finalConfirmationCode,
           secret: currentSecret,
@@ -273,7 +273,7 @@ const AdminUserSettings: React.FC = () => {
     try {
       setUpdateLoading(true);
       const response = await axios.patch(
-        `http://localhost:5000/api/user/update/${editingUser.email}`,
+        `https://founders-portal-test-server-apii.onrender.com/api/user/update/${editingUser.email}`,
         values
       );
 
@@ -312,7 +312,7 @@ const AdminUserSettings: React.FC = () => {
       }
 
       const response = await axios.get(
-        `http://localhost:5000/api/user/${endpoint}`
+        `https://founders-portal-test-server-apii.onrender.com/api/user/${endpoint}`
       );
 
       if (response.data.success) {
@@ -336,7 +336,7 @@ const AdminUserSettings: React.FC = () => {
 
       // Make delete request
       const response = await axios.delete(
-        `http://localhost:5000/api/user/delete/${record.email}`
+        `https://founders-portal-test-server-apii.onrender.com/api/user/delete/${record.email}`
       );
 
       if (response.data.success) {

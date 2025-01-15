@@ -203,7 +203,7 @@ const DashboardLayout = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        "http://localhost:5000/api/resources/categories"
+        "https://founders-portal-test-server-apii.onrender.com/api/resources/categories"
       );
       setCategories(response.data);
     } catch (error) {
@@ -226,7 +226,7 @@ const DashboardLayout = () => {
 
       // First increment the download count
       await axios.post(
-        `http://localhost:5000/api/resources/categories/${category._id}/resources/${item._id}/downloads`
+        `https://founders-portal-test-server-apii.onrender.com/api/resources/categories/${category._id}/resources/${item._id}/downloads`
       );
 
       // Get file extension based on fileType
@@ -244,12 +244,15 @@ const DashboardLayout = () => {
       };
 
       // Then download the file
-      const response = await axios.get(`http://localhost:5000${item.fileUrl}`, {
-        responseType: "blob",
-        headers: {
-          Accept: "application/octet-stream",
-        },
-      });
+      const response = await axios.get(
+        `https://founders-portal-test-server-apii.onrender.com${item.fileUrl}`,
+        {
+          responseType: "blob",
+          headers: {
+            Accept: "application/octet-stream",
+          },
+        }
+      );
 
       // Create download link with proper file extension
       const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -289,7 +292,7 @@ const DashboardLayout = () => {
       case "pdf":
         return (
           <iframe
-            src={`http://localhost:5000${resource.fileUrl}`}
+            src={`https://founders-portal-test-server-apii.onrender.com${resource.fileUrl}`}
             style={{ width: "100%", height: "100%", border: "none" }}
             title={resource.name}
           />

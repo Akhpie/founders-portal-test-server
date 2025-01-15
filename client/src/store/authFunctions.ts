@@ -5,7 +5,7 @@ import { message } from "antd";
 export const handleForgotPassword = async (values: { email: string }) => {
   try {
     const response = await axios.post(
-      "http://localhost:5000/api/request-password-reset",
+      "https://founders-portal-test-server-apii.onrender.com/api/request-password-reset",
       { email: values.email }
     );
 

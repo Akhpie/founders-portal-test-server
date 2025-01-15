@@ -62,7 +62,7 @@ const AdminDashboard: React.FC = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        "http://localhost:5000/api/user/all-users"
+        "https://founders-portal-test-server-apii.onrender.com/api/user/all-users"
       );
       if (response.data.success) {
         setData(response.data.data);

@@ -106,7 +106,9 @@ const NotificationManagement: React.FC = () => {
   useEffect(() => {
     const fetchTemplates = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/templates");
+        const response = await axios.get(
+          "https://founders-portal-test-server-apii.onrender.com/api/templates"
+        );
         // Combine default templates with custom templates
         const allTemplates = [...defaultTemplates, ...response.data.data];
         setTemplates(allTemplates);
@@ -136,7 +138,7 @@ const NotificationManagement: React.FC = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        "http://localhost:5000/api/user/all-users",
+        "https://founders-portal-test-server-apii.onrender.com/api/user/all-users",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -207,7 +209,7 @@ const NotificationManagement: React.FC = () => {
       const formattedContent = formatNewsletterContent(values.content);
 
       const response = await axios.post(
-        "http://localhost:5000/api/user/send-newsletter",
+        "https://founders-portal-test-server-apii.onrender.com/api/user/send-newsletter",
         {
           recipients: recipientEmails,
           subject: values.subject,
@@ -270,7 +272,7 @@ const NotificationManagement: React.FC = () => {
       }
 
       const response = await axios.post(
-        "http://localhost:5000/api/user/send-email",
+        "https://founders-portal-test-server-apii.onrender.com/api/user/send-email",
         {
           recipients: recipientEmails,
           subject: values.subject,

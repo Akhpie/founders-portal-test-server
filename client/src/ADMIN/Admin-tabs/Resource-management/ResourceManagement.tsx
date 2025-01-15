@@ -59,7 +59,7 @@ const ResourceManagement: React.FC = () => {
   };
 
   const getPreviewContent = (resource: ResourceItem) => {
-    const fileUrl = `http://localhost:5000${resource.fileUrl}`;
+    const fileUrl = `https://founders-portal-test-server-apii.onrender.com${resource.fileUrl}`;
 
     switch (resource.fileType.toLowerCase()) {
       case "pdf":
@@ -92,7 +92,7 @@ const ResourceManagement: React.FC = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        "http://localhost:5000/api/resources/categories"
+        "https://founders-portal-test-server-apii.onrender.com/api/resources/categories"
       );
       const categoriesData = Array.isArray(response.data) ? response.data : [];
       const processedCategories = categoriesData.map((category) => ({
@@ -127,12 +127,12 @@ const ResourceManagement: React.FC = () => {
 
       // First increment the download count
       await axios.post(
-        `http://localhost:5000/api/resources/categories/${category._id}/resources/${item._id}/downloads`
+        `https://founders-portal-test-server-apii.onrender.com/api/resources/categories/${category._id}/resources/${item._id}/downloads`
       );
 
       // Use window.open for direct download instead of axios
       window.open(
-        `http://localhost:5000${item.fileUrl}?download=true`,
+        `https://founders-portal-test-server-apii.onrender.com${item.fileUrl}?download=true`,
         "_blank"
       );
 
@@ -158,7 +158,7 @@ const ResourceManagement: React.FC = () => {
   const handleDeleteCategory = async (categoryId: string) => {
     try {
       await axios.delete(
-        `http://localhost:5000/api/resources/categories/${categoryId}`
+        `https://founders-portal-test-server-apii.onrender.com/api/resources/categories/${categoryId}`
       );
       message.success("Category deleted successfully");
       fetchCategories();
@@ -181,13 +181,13 @@ const ResourceManagement: React.FC = () => {
 
   //     if (editingCategory?._id) {
   //       await axios.put(
-  //         `http://localhost:5000/api/resources/categories/${editingCategory._id}`,
+  //         `https://founders-portal-test-server-apii.onrender.com/api/resources/categories/${editingCategory._id}`,
   //         categoryData
   //       );
   //       message.success("Category updated successfully");
   //     } else {
   //       await axios.post(
-  //         "http://localhost:5000/api/resources/categories",
+  //         "https://founders-portal-test-server-apii.onrender.com/api/resources/categories",
   //         categoryData
   //       );
   //       message.success("Category added successfully");
@@ -216,7 +216,7 @@ const ResourceManagement: React.FC = () => {
       if (editingCategory?._id) {
         // Update existing category
         await axios.put(
-          `http://localhost:5000/api/resources/categories/${editingCategory._id}`,
+          `https://founders-portal-test-server-apii.onrender.com/api/resources/categories/${editingCategory._id}`,
           categoryData
         );
         message.success("Category updated successfully");
@@ -224,7 +224,7 @@ const ResourceManagement: React.FC = () => {
       } else {
         // Add new category
         const response = await axios.post(
-          "http://localhost:5000/api/resources/categories",
+          "https://founders-portal-test-server-apii.onrender.com/api/resources/categories",
           categoryData
         );
         const newCategory = response.data;
@@ -273,7 +273,7 @@ const ResourceManagement: React.FC = () => {
   ) => {
     try {
       await axios.delete(
-        `http://localhost:5000/api/resources/categories/${categoryId}/resources/${resourceId}`
+        `https://founders-portal-test-server-apii.onrender.com/api/resources/categories/${categoryId}/resources/${resourceId}`
       );
       message.success("Resource deleted successfully");
       fetchCategories();
@@ -299,7 +299,7 @@ const ResourceManagement: React.FC = () => {
 
       if (editingResource?._id) {
         await axios.put(
-          `http://localhost:5000/api/resources/categories/${selectedCategory?._id}/resources/${editingResource._id}`,
+          `https://founders-portal-test-server-apii.onrender.com/api/resources/categories/${selectedCategory?._id}/resources/${editingResource._id}`,
           formData,
           {
             headers: {
@@ -310,7 +310,7 @@ const ResourceManagement: React.FC = () => {
         message.success("Resource updated successfully");
       } else {
         await axios.post(
-          `http://localhost:5000/api/resources/categories/${selectedCategory?._id}/resources`,
+          `https://founders-portal-test-server-apii.onrender.com/api/resources/categories/${selectedCategory?._id}/resources`,
           formData,
           {
             headers: {

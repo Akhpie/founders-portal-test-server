@@ -85,7 +85,7 @@ const AIChatModal: React.FC<AIChatModalProps> = ({ isOpen, onClose }) => {
       try {
         setIsLoading(true);
         const response = await fetch(
-          "http://localhost:5000/api/ai-chat/schedule-meeting",
+          "https://founders-portal-test-server-apii.onrender.com/api/ai-chat/schedule-meeting",
           {
             method: "POST",
             headers: {
@@ -223,7 +223,7 @@ const AIChatModal: React.FC<AIChatModalProps> = ({ isOpen, onClose }) => {
         }
 
         response = await fetch(
-          "http://localhost:5000/api/ai-chat/analyze-file",
+          "https://founders-portal-test-server-apii.onrender.com/api/ai-chat/analyze-file",
           {
             method: "POST",
             body: formData,
@@ -232,13 +232,16 @@ const AIChatModal: React.FC<AIChatModalProps> = ({ isOpen, onClose }) => {
 
         console.log("File upload response status:", response.status); // Debug log
       } else {
-        response = await fetch("http://localhost:5000/api/ai-chat/chat", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ text: query }),
-        });
+        response = await fetch(
+          "https://founders-portal-test-server-apii.onrender.com/api/ai-chat/chat",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ text: query }),
+          }
+        );
       }
 
       if (!response.ok) {

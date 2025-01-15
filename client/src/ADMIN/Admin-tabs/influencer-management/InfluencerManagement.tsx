@@ -80,7 +80,10 @@ const InfluencerManagement = () => {
 
         // Upload each influencer
         const promises = transformedData.map((influencer) =>
-          axios.post("http://localhost:5000/api/influencers", influencer)
+          axios.post(
+            "https://founders-portal-test-server-apii.onrender.com/api/influencers",
+            influencer
+          )
         );
 
         await Promise.all(promises);
@@ -100,7 +103,9 @@ const InfluencerManagement = () => {
   const fetchInfluencers = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("http://localhost:5000/api/influencers");
+      const response = await axios.get(
+        "https://founders-portal-test-server-apii.onrender.com/api/influencers"
+      );
       setInfluencers(response.data);
     } catch (error) {
       message.error("Failed to fetch influencers");
@@ -120,7 +125,9 @@ const InfluencerManagement = () => {
 
   const handleDelete = async (id: string) => {
     try {
-      await axios.delete(`http://localhost:5000/api/influencers/${id}`);
+      await axios.delete(
+        `https://founders-portal-test-server-apii.onrender.com/api/influencers/${id}`
+      );
       message.success("Influencer deleted successfully");
       fetchInfluencers();
     } catch (error) {
@@ -133,7 +140,9 @@ const InfluencerManagement = () => {
     try {
       // Delete all selected influencers
       const deletePromises = selectedRowKeys.map((id) =>
-        axios.delete(`http://localhost:5000/api/influencers/${id}`)
+        axios.delete(
+          `https://founders-portal-test-server-apii.onrender.com/api/influencers/${id}`
+        )
       );
 
       await Promise.all(deletePromises);
@@ -159,12 +168,15 @@ const InfluencerManagement = () => {
 
       if (editingInfluencer) {
         await axios.put(
-          `http://localhost:5000/api/influencers/${editingInfluencer._id}`,
+          `https://founders-portal-test-server-apii.onrender.com/api/influencers/${editingInfluencer._id}`,
           formData
         );
         message.success("Influencer updated successfully");
       } else {
-        await axios.post("http://localhost:5000/api/influencers", formData);
+        await axios.post(
+          "https://founders-portal-test-server-apii.onrender.com/api/influencers",
+          formData
+        );
         message.success("Influencer added successfully");
       }
 
