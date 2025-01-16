@@ -31,31 +31,13 @@
 import express, { RequestHandler } from "express";
 import { googleLogin } from "../../controllers/googleauthController";
 import { authenticateAdmin } from "../../middleware/adminAuth";
-import cors from "cors";
 
 const router = express.Router();
-
-// CORS configuration specific to auth routes
-const corsOptions = {
-  origin: "https://founders-portal-test-server-client.onrender.com",
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
-  exposedHeaders: ["set-cookie"],
-};
-
-// Apply CORS to all routes in this router
-router.use(cors(corsOptions));
-
-// Handle OPTIONS preflight requests
-router.options("*", cors(corsOptions));
+const FRONTEND_URL = "https://founders-portal-test-server-client.onrender.com";
 
 // Get current user info
 const getCurrentUser: RequestHandler = (req, res) => {
-  res.header(
-    "Access-Control-Allow-Origin",
-    "https://founders-portal-test-server-client.onrender.com"
-  );
+  res.header("Access-Control-Allow-Origin", FRONTEND_URL);
   res.header("Access-Control-Allow-Credentials", "true");
   res.json({
     id: req.adminuser?._id,
@@ -68,22 +50,20 @@ const getCurrentUser: RequestHandler = (req, res) => {
 
 // Logout handler
 const logout: RequestHandler = (req, res) => {
-  res.header(
-    "Access-Control-Allow-Origin",
-    "https://founders-portal-test-server-client.onrender.com"
-  );
+  res.header("Access-Control-Allow-Origin", FRONTEND_URL);
   res.header("Access-Control-Allow-Credentials", "true");
-  res.clearCookie("adminToken");
+  res.clearCookie("adminToken", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+  });
   res.json({ message: "Logged out successfully" });
 };
 
-// Wrap the googleLogin handler to ensure CORS headers are set
+// Wrap googleLogin to ensure proper headers
 const wrappedGoogleLogin: RequestHandler = async (req, res, next) => {
   try {
-    res.header(
-      "Access-Control-Allow-Origin",
-      "https://founders-portal-test-server-client.onrender.com"
-    );
+    res.header("Access-Control-Allow-Origin", FRONTEND_URL);
     res.header("Access-Control-Allow-Credentials", "true");
     await googleLogin(req, res, next);
   } catch (error) {
