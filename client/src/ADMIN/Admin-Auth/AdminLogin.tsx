@@ -136,7 +136,7 @@ const AdminLogin: React.FC = () => {
             credential: credentialResponse.credential,
           }),
           credentials: "include",
-          mode: "no-cors",
+          mode: "cors",
         }
       );
 
