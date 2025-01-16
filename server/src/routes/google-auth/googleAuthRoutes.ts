@@ -63,8 +63,11 @@ const logout: RequestHandler = (req, res) => {
 // Wrap googleLogin to ensure proper headers
 const wrappedGoogleLogin: RequestHandler = async (req, res, next) => {
   try {
-    res.header("Access-Control-Allow-Origin", FRONTEND_URL);
-    res.header("Access-Control-Allow-Credentials", "true");
+    const origin = req.headers.origin;
+    if (origin === FRONTEND_URL) {
+      res.header("Access-Control-Allow-Origin", FRONTEND_URL);
+      res.header("Access-Control-Allow-Credentials", "true");
+    }
     await googleLogin(req, res, next);
   } catch (error) {
     next(error);

@@ -25,6 +25,9 @@ import seedRoutes from "./routes/Seed-Routes/seedRoutes";
 
 dotenv.config();
 
+const FRONTEND_URL = "https://founders-portal-test-server-client.onrender.com";
+const BACKEND_URL = "https://founders-portal-test-server-apii.onrender.com";
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -42,7 +45,27 @@ app.use(
 );
 
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
+  // Set specific origin instead of wildcard
+  const origin = req.headers.origin;
+  if (origin === FRONTEND_URL) {
+    res.header("Access-Control-Allow-Origin", FRONTEND_URL);
+    res.header("Access-Control-Allow-Credentials", "true");
+    res.header(
+      "Access-Control-Allow-Methods",
+      "GET, POST, PUT, DELETE, OPTIONS, PATCH"
+    );
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept, Authorization, Cookie"
+    );
+    res.header("Access-Control-Expose-Headers", "set-cookie");
+  }
+
+  // Handle preflight
+  if (req.method === "OPTIONS") {
+    res.status(204).end();
+    return;
+  }
   next();
 });
 
