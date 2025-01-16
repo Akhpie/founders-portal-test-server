@@ -36,7 +36,7 @@ app.use(cookieParser());
 // Middleware
 app.use(
   cors({
-    origin: "https://founders-portal-test-server-client.onrender.com",
+    origin: true,
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
@@ -44,30 +44,30 @@ app.use(
   })
 );
 
-app.use((req, res, next) => {
-  // Set specific origin instead of wildcard
-  const origin = req.headers.origin;
-  if (origin === FRONTEND_URL) {
-    res.header("Access-Control-Allow-Origin", FRONTEND_URL);
-    res.header("Access-Control-Allow-Credentials", "true");
-    res.header(
-      "Access-Control-Allow-Methods",
-      "GET, POST, PUT, DELETE, OPTIONS, PATCH"
-    );
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept, Authorization, Cookie"
-    );
-    res.header("Access-Control-Expose-Headers", "set-cookie");
-  }
+// app.use((req, res, next) => {
+//   // Set specific origin instead of wildcard
+//   const origin = req.headers.origin;
+//   if (origin === FRONTEND_URL) {
+//     res.header("Access-Control-Allow-Origin", FRONTEND_URL);
+//     res.header("Access-Control-Allow-Credentials", "true");
+//     res.header(
+//       "Access-Control-Allow-Methods",
+//       "GET, POST, PUT, DELETE, OPTIONS, PATCH"
+//     );
+//     res.header(
+//       "Access-Control-Allow-Headers",
+//       "Origin, X-Requested-With, Content-Type, Accept, Authorization, Cookie"
+//     );
+//     res.header("Access-Control-Expose-Headers", "set-cookie");
+//   }
 
-  // Handle preflight
-  if (req.method === "OPTIONS") {
-    res.status(204).end();
-    return;
-  }
-  next();
-});
+//   // Handle preflight
+//   if (req.method === "OPTIONS") {
+//     res.status(204).end();
+//     return;
+//   }
+//   next();
+// });
 
 app.use(express.json());
 
