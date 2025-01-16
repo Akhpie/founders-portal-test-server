@@ -35,7 +35,10 @@ const chatHandler = async (req: Request, res: Response): Promise<void> => {
     res.setHeader("Content-Type", "text/event-stream");
     res.setHeader("Cache-Control", "no-cache");
     res.setHeader("Connection", "keep-alive");
-    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader(
+      "Access-Control-Allow-Origin",
+      "https://founders-portal-test-server-client.onrender.com"
+    );
 
     // Check if it's a meeting scheduling request
     const isSchedulingRequest = MEETING_RELATED_PROMPTS.some((prompt) =>
