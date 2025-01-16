@@ -106,6 +106,8 @@ export const googleLogin: RequestHandler = async (req, res, next) => {
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       maxAge: 24 * 60 * 60 * 1000,
+      domain: ".onrender.com",
+      path: "/",
     });
 
     res.json({
