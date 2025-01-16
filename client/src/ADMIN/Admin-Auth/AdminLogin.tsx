@@ -116,6 +116,9 @@ import { Card, message } from "antd";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_ADMIN_PRODUCTION_GOOGLE_CLIENT_ID;
+const BACKEND_URL =
+  import.meta.env.VITE_BACKEND_URL ||
+  "https://founders-portal-test-server-apii.onrender.com";
 
 const AdminLogin: React.FC = () => {
   const navigate = useNavigate();
@@ -124,21 +127,18 @@ const AdminLogin: React.FC = () => {
   const handleGoogleSuccess = async (credentialResponse: any) => {
     setLoading(true);
     try {
-      const response = await fetch(
-        "https://founders-portal-test-server-apii.onrender.com/api/auth/google-login",
-        {
-          // Update with your actual backend URL
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            credential: credentialResponse.credential,
-          }),
-          credentials: "include",
-          mode: "cors",
-        }
-      );
+      const response = await fetch(`${BACKEND_URL}/api/auth/google-login`, {
+        // Update with your actual backend URL
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          credential: credentialResponse.credential,
+        }),
+        credentials: "include",
+        mode: "cors",
+      });
 
       if (!response.ok) {
         throw new Error("Authentication failed");
