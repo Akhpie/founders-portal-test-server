@@ -124,23 +124,64 @@ const AdminLogin: React.FC = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
+  // const handleGoogleSuccess = async (credentialResponse: any) => {
+  //   setLoading(true);
+  //   try {
+  //     const response = await fetch(`${BACKEND_URL}/api/auth/google-login`, {
+  //       // Update with your actual backend URL
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         credential: credentialResponse.credential,
+  //       }),
+  //       credentials: "include",
+  //       mode: "cors",
+  //     });
+
+  //     if (!response.ok) {
+  //       throw new Error("Authentication failed");
+  //     }
+
+  //     const data = await response.json();
+  //     if (data.isAdmin) {
+  //       message.success("Login successful!");
+  //       navigate("/adminPortal/dashboard");
+  //     } else {
+  //       message.error("You do not have admin access");
+  //     }
+  //   } catch (error) {
+  //     console.error("Login error:", error);
+  //     message.error("Login failed. Please try again.");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
   const handleGoogleSuccess = async (credentialResponse: any) => {
     setLoading(true);
+    console.log("Attempting to connect to:", BACKEND_URL);
+
     try {
       const response = await fetch(`${BACKEND_URL}/api/auth/google-login`, {
-        // Update with your actual backend URL
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          // Remove any extra headers we don't need
         },
         body: JSON.stringify({
           credential: credentialResponse.credential,
         }),
         credentials: "include",
-        mode: "cors",
+        // Remove mode: "cors" as it's already the default when making cross-origin requests
       });
 
+      console.log("Response status:", response.status);
+
       if (!response.ok) {
+        const errorData = await response.text(); // Get error message if any
+        console.error("Server response:", errorData);
         throw new Error("Authentication failed");
       }
 
