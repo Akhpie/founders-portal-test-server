@@ -25,9 +25,6 @@ import seedRoutes from "./routes/Seed-Routes/seedRoutes";
 
 dotenv.config();
 
-const FRONTEND_URL = "https://founders-portal-test-server-client.onrender.com";
-const BACKEND_URL = "https://founders-portal-test-server-apii.onrender.com";
-
 const CLIENT_URL = process.env.CLIENT_URL;
 
 const app = express();
@@ -45,6 +42,11 @@ app.use(
     exposedHeaders: ["set-cookie"],
   })
 );
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Credentials", "true");
+  next();
+});
 
 app.use((req, res, next) => {
   console.log("Incoming request:", {
