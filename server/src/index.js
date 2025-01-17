@@ -17,8 +17,16 @@ dotenv_1.default.config();
 app.use(
   (0, cors_1.default)({
     origin: "https://founders-portal-test-server-client.onrender.com",
+    credentials: true,
   })
 );
+
+// Middleware to set the Access-Control-Allow-Credentials header
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Credentials", "true");
+  next();
+});
+
 app.use(express_1.default.json());
 // Connect to Database
 (0, db_1.default)();
