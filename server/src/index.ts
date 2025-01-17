@@ -36,7 +36,7 @@ app.use(cookieParser());
 // Middleware
 app.use(
   cors({
-    origin: true,
+    origin: FRONTEND_URL,
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
@@ -52,7 +52,7 @@ app.use(
 //     res.header("Access-Control-Allow-Credentials", "true");
 //     res.header(
 //       "Access-Control-Allow-Methods",
-//       "GET, POST, PUT, DELETE, OPTIONS, PATCH"
+//       "GET, POST, PUT, DELETE, OPTIONS"
 //     );
 //     res.header(
 //       "Access-Control-Allow-Headers",
