@@ -62,6 +62,7 @@ const logout: RequestHandler = (req, res) => {
 
 // Wrap googleLogin to ensure proper headers
 const wrappedGoogleLogin: RequestHandler = async (req, res, next) => {
+  console.log("Google login request received");
   try {
     const origin = req.headers.origin;
     if (origin === FRONTEND_URL) {
