@@ -10,14 +10,13 @@
 }
 
 /* HEADER BUTTONS */
-:where(.css-dev-only-do-not-override-z4ubgo).ant-menu-dark.ant-menu-horizontal
-  > .ant-menu-item-selected,
-:where(.css-dev-only-do-not-override-z4ubgo).ant-menu-dark
+:where(.css-z4ubgo).ant-menu-dark.ant-menu-horizontal > .ant-menu-item-selected,
+:where(.css-z4ubgo).ant-menu-dark
   > .ant-menu.ant-menu-horizontal
   > .ant-menu-item-selected,
-:where(.css-dev-only-do-not-override-z4ubgo).ant-menu-dark.ant-menu-horizontal
+:where(.css-z4ubgo).ant-menu-dark.ant-menu-horizontal
   > .ant-menu-submenu-selected,
-:where(.css-dev-only-do-not-override-z4ubgo).ant-menu-dark
+:where(.css-z4ubgo).ant-menu-dark
   > .ant-menu.ant-menu-horizontal
   > .ant-menu-submenu-selected {
   color: #fff;
@@ -27,14 +26,13 @@
   background-size: 100% auto !important;
 }
 
-:where(.css-dev-only-do-not-override-z4ubgo).ant-menu-dark.ant-menu-horizontal
-  > .ant-menu-item-selected,
-:where(.css-dev-only-do-not-override-z4ubgo).ant-menu-dark
+:where(.css-z4ubgo).ant-menu-dark.ant-menu-horizontal > .ant-menu-item-selected,
+:where(.css-z4ubgo).ant-menu-dark
   > .ant-menu.ant-menu-horizontal
   > .ant-menu-item-selected,
-:where(.css-dev-only-do-not-override-z4ubgo).ant-menu-dark.ant-menu-horizontal
+:where(.css-z4ubgo).ant-menu-dark.ant-menu-horizontal
   > .ant-menu-submenu-selected,
-:where(.css-dev-only-do-not-override-z4ubgo).ant-menu-dark
+:where(.css-z4ubgo).ant-menu-dark
   > .ant-menu.ant-menu-horizontal
   > .ant-menu-submenu-selected {
   color: #fff;
@@ -42,20 +40,14 @@
   border-radius: 10px !important;
 }
 
-:where(.css-dev-only-do-not-override-z4ubgo).ant-menu-dark
-  .ant-menu-item-selected,
-:where(.css-dev-only-do-not-override-z4ubgo).ant-menu-dark
-  > .ant-menu
-  .ant-menu-item-selected {
+:where(.css-z4ubgo).ant-menu-dark .ant-menu-item-selected,
+:where(.css-z4ubgo).ant-menu-dark > .ant-menu .ant-menu-item-selected {
   background-color: #faebd700 !important;
 }
 
 /* SUBMENU BUTTONS + SIDEBAR */
-:where(.css-dev-only-do-not-override-z4ubgo).ant-menu-dark
-  .ant-menu-item-selected,
-:where(.css-dev-only-do-not-override-z4ubgo).ant-menu-dark
-  > .ant-menu
-  .ant-menu-item-selected {
+:where(.css-z4ubgo).ant-menu-dark .ant-menu-item-selected,
+:where(.css-z4ubgo).ant-menu-dark > .ant-menu .ant-menu-item-selected {
   background-image: linear-gradient(to right, #1e40af, #6b21a8);
 }
 
@@ -74,12 +66,12 @@
   background-image: linear-gradient(to right, #05205c, #001529);
 }
 
-:where(.css-dev-only-do-not-override-z4ubgo).ant-menu-light,
-:where(.css-dev-only-do-not-override-z4ubgo).ant-menu-light > .ant-menu {
+:where(.css-z4ubgo).ant-menu-light,
+:where(.css-z4ubgo).ant-menu-light > .ant-menu {
   color: rgba(255, 255, 255, 0.85);
   background: transparent;
 }
-:where(.css-dev-only-do-not-override-z4ubgo).ant-btn-variant-solid {
+:where(.css-z4ubgo).ant-btn-variant-solid {
   color: #fff;
   background-image: linear-gradient(
     to right,
@@ -91,7 +83,7 @@
   transition: 0.5s ease !important;
 }
 
-:where(.css-dev-only-do-not-override-z4ubgo).ant-btn-variant-solid:hover {
+:where(.css-z4ubgo).ant-btn-variant-solid:hover {
   background-position: right center !important;
   background-image: linear-gradient(
     to left,
@@ -101,10 +93,10 @@
   ) !important;
 }
 
-:where(.css-dev-only-do-not-override-z4ubgo).ant-switch .ant-switch-inner {
+:where(.css-z4ubgo).ant-switch .ant-switch-inner {
   background-image: linear-gradient(to right, #1e40af, #6b21a8);
 }
-:where(.css-dev-only-do-not-override-z4ubgo).ant-input-search
+:where(.css-z4ubgo).ant-input-search
   > .ant-input-group
   > .ant-input-group-addon:last-child
   .ant-input-search-button {
