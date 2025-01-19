@@ -160,10 +160,6 @@ const Navbar: React.FC<NavbarProps> = ({ className = "" }) => {
       {mobileMenuVisible && (
         <div className="absolute top-16 left-0 w-full bg-white shadow-lg md:hidden">
           <Menu mode="inline" className="px-4 py-2">
-            <Menu.Item key="founders">For Founders</Menu.Item>
-            <Menu.Item key="investors">Investor Network</Menu.Item>
-            <Menu.Item key="incubators">Incubators</Menu.Item>
-            <Menu.Item key="resources">Resources</Menu.Item>
             <Menu.Item key="signin">
               <Button block onClick={() => navigate("/login")}>
                 Sign In
