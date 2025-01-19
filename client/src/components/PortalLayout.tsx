@@ -389,7 +389,7 @@ export default function PortalLayout() {
           </Header>
 
           {/* Main Content */}
-          <Content
+          {/* <Content
             className={`m-6 p-6 rounded-lg relative ${
               isDark ? "" : "bg-white"
             }`}
@@ -403,6 +403,13 @@ export default function PortalLayout() {
                   }
                 : {}
             }
+          >
+            <Outlet />
+          </Content> */}
+          <Content
+            className={`m-6 p-6 rounded-lg relative ${
+              isDark ? "background-image-class" : "bg-white"
+            }`}
           >
             <Outlet />
           </Content>

@@ -1,0 +1,6 @@
+.background-image-class {
+  background-image: url("../src/assets/images/blob-one.svg"); /* Use the CSS variable */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
