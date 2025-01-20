@@ -129,7 +129,7 @@ const Navbar: React.FC<NavbarProps> = ({ className = "" }) => {
             </svg>
           </div>
           {/* Gradient Text */}
-          <span style={gradientTextStyle}>FoundersWay</span>
+          <span style={gradientTextStyle}>Gandeeva</span>
         </div>
 
         <div className="hidden md:flex items-center gap-4">

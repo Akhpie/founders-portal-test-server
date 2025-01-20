@@ -254,7 +254,7 @@ export default function PortalLayout() {
                 }}
                 onClick={() => !collapsed && navigate("/")}
               >
-                FoundersWay
+                Gandeeva
                 {!collapsed && (
                   <Rocket
                     className="w-6 h-6"
