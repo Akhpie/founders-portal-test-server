@@ -64,10 +64,13 @@ export default function LoginPage() {
 
       // Try both user types in sequence
       try {
-        const response = await axios.post("http://localhost:5000/api/login", {
-          email: values.email,
-          password: values.password,
-        });
+        const response = await axios.post(
+          "https://founders-portal-test-server-apii.onrender.com/api/login",
+          {
+            email: values.email,
+            password: values.password,
+          }
+        );
 
         console.log("Login response:", response.data);
 
@@ -82,7 +85,7 @@ export default function LoginPage() {
       } catch (firstError) {
         console.log("Trying visitor login...");
         const visitorResponse = await axios.post(
-          "http://localhost:5000/api/visitor/login",
+          "https://founders-portal-test-server-apii.onrender.com/api/visitor/login",
           {
             email: values.email,
             password: values.password,
@@ -116,8 +119,8 @@ export default function LoginPage() {
 
     try {
       const endpoint = tempToken.includes("visitor")
-        ? "http://localhost:5000/api/visitor/login"
-        : "http://localhost:5000/api/login";
+        ? "https://founders-portal-test-server-apii.onrender.com/api/visitor/login"
+        : "https://founders-portal-test-server-apii.onrender.com/api/login";
 
       const response = await axios.post(endpoint, {
         email: loginCredentials.email,
@@ -149,7 +152,7 @@ export default function LoginPage() {
     setIsLoading(true);
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/request-password-reset",
+        "https://founders-portal-test-server-apii.onrender.com/api/request-password-reset",
         { email: values.email }
       );
 
