@@ -1,5 +1,5 @@
 .background-image-class {
-  background-image: url("../src/assets/images/blob-one.svg"); /* Use the CSS variable */
+  background-image: url("../assets/images/blob-one.svg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
