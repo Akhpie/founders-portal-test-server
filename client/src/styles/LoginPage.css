@@ -298,3 +298,29 @@
 .ant-message-success .anticon {
   color: #52c41a !important;
 }
+
+/* FORGOT PASS MODAL */
+
+.forgot-modal-glass .ant-modal-content {
+  backdrop-filter: blur(16px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+  background-color: rgba(17, 25, 40, 0.75) !important;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.125);
+  border-radius: 16px;
+}
+
+.forgot-modal-glass .ant-modal-title {
+  background: linear-gradient(
+    to right,
+    rgba(0, 30, 75, 0.6),
+    rgba(0, 30, 75, 0.6)
+  ) !important;
+  padding: 6px;
+  border-radius: 10px;
+}
+
+.forgot-modal-glass .ant-input {
+  background: transparent !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+}

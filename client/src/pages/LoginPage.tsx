@@ -270,6 +270,7 @@ export default function LoginPage() {
         open={isForgotPasswordModalOpen}
         onCancel={() => setIsForgotPasswordModalOpen(false)}
         footer={null}
+        className="forgot-modal-glass"
       >
         <Form name="forgotPassword" onFinish={handleForgotPassword}>
           <Form.Item
