@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --watch 'src/**/*.ts' --exec ts-node src/index.ts",
+    "dev": "cross-env NODE_ENV=development nodemon --watch 'src/**/*.ts' --exec ts-node src/index.ts",
     "build": "tsc",
     "start": "node dist/src/index.js"
   },
@@ -57,6 +57,7 @@
     "@types/node": "^22.8.1",
     "@types/nodemailer": "^6.4.16",
     "@types/speakeasy": "^2.0.10",
+    "cross-env": "^7.0.3",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.3"
   }
