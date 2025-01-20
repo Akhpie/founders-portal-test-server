@@ -92,6 +92,60 @@ const createVerificationEmailTemplate = (
 </html>
 `;
 
+// password request template
+
+const createPasswordResetTemplate = (resetLink: string, userName: string) => `
+<html>
+  <body style="font-family: Arial, sans-serif; background-color: #f4f7fa; padding: 20px;">
+    <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; padding: 40px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+      <h2 style="color: #333333; margin-bottom: 20px;">Password Reset Request</h2>
+      
+      <div style="background-color: #f8f9fa; border-radius: 6px; padding: 20px; margin: 20px 0;">
+        <p style="color: #555555; font-size: 16px; margin-bottom: 10px;">Hi ${userName},</p>
+        <p style="color: #555555; font-size: 16px; line-height: 1.5;">We received a request to reset your password. Click the button below to choose a new password.</p>
+      </div>
+
+      <div style="margin: 30px 0;">
+        <a href="${resetLink}" 
+           style="display: inline-block; 
+                  background-color: #4285f4; 
+                  color: #ffffff; 
+                  padding: 14px 30px; 
+                  font-size: 16px; 
+                  text-decoration: none; 
+                  border-radius: 5px;
+                  box-shadow: 0 2px 4px rgba(66,133,244,0.3);
+                  transition: background-color 0.3s ease;">
+          Reset Password
+        </a>
+      </div>
+
+      <div style="margin-top: 25px;">
+        <p style="color: #666666; font-size: 14px; line-height: 1.5;">
+          This password reset link will expire in 60 minutes for security reasons.
+          If you didn't request a password reset, you can safely ignore this email.
+        </p>
+      </div>
+
+      <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee;">
+        <p style="color: #888888; font-size: 13px;">For security reasons, we recommend:</p>
+        <ul style="color: #888888; font-size: 13px; text-align: left; margin: 10px 0; padding-left: 40px;">
+          <li>Use a unique password</li>
+          <li>Include numbers and special characters</li>
+          <li>Make it at least 8 characters long</li>
+        </ul>
+      </div>
+
+      <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee;">
+        <p style="color: #aaaaaa; font-size: 12px;">
+          © ${new Date().getFullYear()} Your Company Name. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
+`;
+
 interface AuthenticatedRequest extends Request {
   user?: { userId: string }; // Define the expected type for `user` in the request
 }
@@ -500,7 +554,7 @@ const requestPasswordResetHandler = async (
     await sendEmail(
       email,
       "Password Reset Request",
-      `<p>Click <a href="${resetLink}">here</a> to reset your password.</p>`
+      createPasswordResetTemplate(resetLink, user.fullName)
     );
 
     res.status(200).json({
@@ -762,7 +816,7 @@ const registerVisitorHandler = async (
       await sendEmail(
         email,
         "Verify your email",
-        `<p>Click <a href="${verifyLink}">here</a> to confirm your email.</p>`
+        createVerificationEmailTemplate(verifyLink, fullName)
       );
     } catch (emailError) {
       console.error("Email sending failed:", emailError);
@@ -864,7 +918,7 @@ const visitorPasswordResetRequestHandler = async (
     await sendEmail(
       email,
       "Password Reset Request",
-      `<p>Click <a href="${resetLink}">here</a> to reset your password.</p>`
+      createPasswordResetTemplate(resetLink, visitor.fullName)
     );
 
     res.status(200).json({
