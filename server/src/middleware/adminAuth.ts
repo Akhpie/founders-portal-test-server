@@ -67,3 +67,20 @@ export const isSuperAdmin = (
   }
   next();
 };
+
+export const setSecureCookieOptions = () => ({
+  httpOnly: true, // Prevents JavaScript access to the cookie
+  secure: process.env.NODE_ENV === "production", // Only sent over HTTPS in production
+  sameSite: "strict" as const, // Protects against CSRF
+  maxAge: 24 * 60 * 60 * 1000, // 24 hours in milliseconds
+  path: "/", // Cookie is available for all paths
+  domain: process.env.COOKIE_DOMAIN || undefined, // Optional domain setting
+});
+
+export const setCookie = (res: Response, token: string) => {
+  res.cookie("adminToken", token, setSecureCookieOptions());
+};
+
+export const clearCookie = (res: Response) => {
+  res.clearCookie("adminToken", setSecureCookieOptions());
+};
