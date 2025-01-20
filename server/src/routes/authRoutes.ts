@@ -56,6 +56,42 @@ interface LoggedInUser {
 // In-memory session store (replace with Redis in production)
 const activeSessions = new Map<string, Session>();
 
+// Welcome email template
+
+const createVerificationEmailTemplate = (
+  verifyLink: string,
+  userName: string
+) => `
+<html>
+  <body style="font-family: Arial, sans-serif; background-color: #f4f7fa; padding: 20px;">
+    <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; padding: 40px; text-align: center;">
+      <h2 style="color: #333333;">Welcome!</h2>
+      <p style="color: #555555; font-size: 16px;">Hi ${userName},</p>
+      <p style="color: #555555; font-size: 16px;">Thank you for registering with us. Please verify your email address to complete your registration and access your account.</p>
+      <div style="margin: 30px 0;">
+        <a href="${verifyLink}" 
+           style="display: inline-block; 
+                  background-color: #4CAF50; 
+                  color: #ffffff; 
+                  padding: 14px 30px; 
+                  font-size: 16px; 
+                  text-decoration: none; 
+                  border-radius: 5px;
+                  box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+          Verify Email Address
+        </a>
+      </div>
+      <p style="color: #777777; font-size: 14px;">If you didn't create an account, you can safely ignore this email.</p>
+      <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee;">
+        <p style="color: #aaaaaa; font-size: 12px;">
+          © ${new Date().getFullYear()} Your Company Name. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
+`;
+
 interface AuthenticatedRequest extends Request {
   user?: { userId: string }; // Define the expected type for `user` in the request
 }
@@ -149,7 +185,7 @@ const registerHandler = async (req: Request, res: Response): Promise<void> => {
       await sendEmail(
         email,
         "Verify your email",
-        `<p>Click <a href="${verifyLink}">here</a> to confirm your email.</p>`
+        createVerificationEmailTemplate(verifyLink, fullName)
       );
     } catch (emailError) {
       console.error("Email sending failed:", emailError);
