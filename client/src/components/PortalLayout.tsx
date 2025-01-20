@@ -38,6 +38,7 @@ import svgbg from "../assets/images/blob-one.svg";
 import { useChecklistStore } from "../store/checklistStore";
 import angelIcon from "../assets/images/angel-investor.png";
 import influencerIcon from "../assets/images/influencer-icon.png";
+import "../styles/PortalLayout.css";
 
 const { Header, Sider, Content } = Layout;
 const { Search } = Input;
