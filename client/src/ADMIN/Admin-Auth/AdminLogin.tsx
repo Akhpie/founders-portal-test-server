@@ -124,41 +124,6 @@ const AdminLogin: React.FC = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  // const handleGoogleSuccess = async (credentialResponse: any) => {
-  //   setLoading(true);
-  //   try {
-  //     const response = await fetch(`${BACKEND_URL}/api/auth/google-login`, {
-  //       // Update with your actual backend URL
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         credential: credentialResponse.credential,
-  //       }),
-  //       credentials: "include",
-  //       mode: "cors",
-  //     });
-
-  //     if (!response.ok) {
-  //       throw new Error("Authentication failed");
-  //     }
-
-  //     const data = await response.json();
-  //     if (data.isAdmin) {
-  //       message.success("Login successful!");
-  //       navigate("/adminPortal/dashboard");
-  //     } else {
-  //       message.error("You do not have admin access");
-  //     }
-  //   } catch (error) {
-  //     console.error("Login error:", error);
-  //     message.error("Login failed. Please try again.");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
   const handleGoogleSuccess = async (credentialResponse: any) => {
     setLoading(true);
     console.log("Attempting to connect to:", BACKEND_URL);
