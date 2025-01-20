@@ -34,6 +34,7 @@ export default function LoginPage() {
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const [isForgotPasswordModalOpen, setIsForgotPasswordModalOpen] =
     useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // New state for 2FA
   const [showTwoFactorModal, setShowTwoFactorModal] = useState(false);
@@ -54,6 +55,7 @@ export default function LoginPage() {
   };
 
   const onLoginFinish = async (values: any) => {
+    setIsLoading(true);
     try {
       setLoginCredentials({
         email: values.email,
@@ -62,13 +64,10 @@ export default function LoginPage() {
 
       // Try both user types in sequence
       try {
-        const response = await axios.post(
-          "https://founders-portal-test-server-apii.onrender.com/api/login",
-          {
-            email: values.email,
-            password: values.password,
-          }
-        );
+        const response = await axios.post("http://localhost:5000/api/login", {
+          email: values.email,
+          password: values.password,
+        });
 
         console.log("Login response:", response.data);
 
@@ -83,7 +82,7 @@ export default function LoginPage() {
       } catch (firstError) {
         console.log("Trying visitor login...");
         const visitorResponse = await axios.post(
-          "https://founders-portal-test-server-apii.onrender.com/api/visitor/login",
+          "http://localhost:5000/api/visitor/login",
           {
             email: values.email,
             password: values.password,
@@ -101,20 +100,24 @@ export default function LoginPage() {
       const errorMessage =
         error.response?.data?.message || "Invalid email or password.";
       message.error(errorMessage);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleTwoFactorSubmit = async () => {
+    setIsLoading(true);
     if (!loginCredentials) {
       message.error("Login information missing. Please try again.");
       setShowTwoFactorModal(false);
+      setIsLoading(false);
       return;
     }
 
     try {
       const endpoint = tempToken.includes("visitor")
-        ? "https://founders-portal-test-server-apii.onrender.com/api/visitor/login"
-        : "https://founders-portal-test-server-apii.onrender.com/api/login";
+        ? "http://localhost:5000/api/visitor/login"
+        : "http://localhost:5000/api/login";
 
       const response = await axios.post(endpoint, {
         email: loginCredentials.email,
@@ -137,13 +140,16 @@ export default function LoginPage() {
       const errorMessage =
         error.response?.data?.message || "Failed to verify 2FA code";
       message.error(errorMessage);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleForgotPassword = async (values: { email: string }) => {
+    setIsLoading(true);
     try {
       const response = await axios.post(
-        "https://founders-portal-test-server-apii.onrender.com/api/request-password-reset",
+        "http://localhost:5000/api/request-password-reset",
         { email: values.email }
       );
 
@@ -157,9 +163,10 @@ export default function LoginPage() {
       message.error(
         error.response?.data?.message || "Failed to send reset link"
       );
+    } finally {
+      setIsLoading(false);
+      setIsForgotPasswordModalOpen(false);
     }
-
-    setIsForgotPasswordModalOpen(false);
   };
 
   return (
@@ -188,6 +195,7 @@ export default function LoginPage() {
                   prefix={<UserOutlined />}
                   placeholder="Email"
                   size="large"
+                  disabled={isLoading}
                 />
               </Form.Item>
               <Form.Item
@@ -200,6 +208,7 @@ export default function LoginPage() {
                   prefix={<LockOutlined />}
                   placeholder="Password"
                   size="large"
+                  disabled={isLoading}
                 />
               </Form.Item>
 
@@ -207,13 +216,19 @@ export default function LoginPage() {
                 <Space className="w-full" direction="vertical">
                   <div className="flex justify-between">
                     <Form.Item name="remember" valuePropName="checked" noStyle>
-                      <Checkbox>Remember me</Checkbox>
+                      <Checkbox disabled={isLoading}>Remember me</Checkbox>
                     </Form.Item>
                     <Link onClick={() => setIsForgotPasswordModalOpen(true)}>
                       Forgot password?
                     </Link>
                   </div>
-                  <Button type="primary" htmlType="submit" block size="large">
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    block
+                    size="large"
+                    loading={isLoading}
+                  >
                     Login
                   </Button>
                 </Space>
@@ -223,6 +238,7 @@ export default function LoginPage() {
               <button
                 className="custom-register-btn"
                 onClick={() => setIsRegisterModalOpen(true)}
+                disabled={isLoading}
               >
                 Register
               </button>
@@ -241,7 +257,11 @@ export default function LoginPage() {
           setTwoFactorCode("");
           setLoginCredentials(null);
         }}
-        okButtonProps={{ disabled: twoFactorCode.length !== 6 }}
+        okButtonProps={{
+          disabled: twoFactorCode.length !== 6 || isLoading,
+          loading: isLoading,
+        }}
+        cancelButtonProps={{ disabled: isLoading }}
       >
         <div className="space-y-4">
           <p>Please enter the 6-digit code from your authenticator app:</p>
@@ -254,6 +274,7 @@ export default function LoginPage() {
             maxLength={6}
             autoFocus
             className="text-center text-lg tracking-wide"
+            disabled={isLoading}
           />
         </div>
       </Modal>
@@ -280,7 +301,12 @@ export default function LoginPage() {
               { type: "email", message: "Please enter a valid email!" },
             ]}
           >
-            <Input prefix={<UserOutlined />} placeholder="Email" size="large" />
+            <Input
+              prefix={<UserOutlined />}
+              placeholder="Email"
+              size="large"
+              disabled={isLoading}
+            />
           </Form.Item>
 
           <Form.Item>
@@ -288,7 +314,13 @@ export default function LoginPage() {
               <Tooltip title="We'll send you a link to reset your password">
                 <InfoCircleOutlined />
               </Tooltip>
-              <Button type="primary" htmlType="submit" block size="small">
+              <Button
+                type="primary"
+                htmlType="submit"
+                block
+                size="small"
+                loading={isLoading}
+              >
                 Send Reset Link
               </Button>
             </Space>
