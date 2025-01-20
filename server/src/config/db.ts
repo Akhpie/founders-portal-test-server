@@ -6,7 +6,7 @@ dotenv.config();
 const connectDB = async () => {
   try {
     const mongoURI =
-      process.env.NODE_ENV === "development"
+      process.env.NODE_ENV === "production"
         ? process.env.MONGO_URI
         : process.env.MONGO_DEV_URI;
 
