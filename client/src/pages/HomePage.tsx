@@ -471,7 +471,7 @@ const HomePage = () => {
         <Navbar />
 
         <Content className="relative z-10">
-          <div className="max-w-4xl mx-auto px-4 py-32 text-center">
+          <div className="max-w-4xl mx-auto px-4 py-20 text-center">
             <GlassCard className="p-12">
               {/* Replace the old pulse effect with the new component */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
