@@ -46,3 +46,11 @@ export interface JWTPayload {
   role: string;
   permissions: string[];
 }
+
+export interface TokenPayload {
+  id: string;
+  adminemail: string;
+  adminrole: string;
+  profilePic?: string;
+  tokenVersion: number;
+}

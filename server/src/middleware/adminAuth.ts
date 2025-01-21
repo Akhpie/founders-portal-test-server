@@ -84,3 +84,73 @@ export const setCookie = (res: Response, token: string) => {
 export const clearCookie = (res: Response) => {
   res.clearCookie("adminToken", setSecureCookieOptions());
 };
+
+// import { Request, Response, NextFunction } from "express";
+// import jwt from "jsonwebtoken";
+// import AdminUser, { IAdminUser } from "../models/AdminUser";
+// import { config } from "../config/config";
+// import { getLogger } from "../../utils/logger";
+// import { TokenPayload } from "../types/admin.types";
+
+// const logger = getLogger("AdminAuth");
+
+// declare global {
+//   namespace Express {
+//     interface Request {
+//       adminuser: IAdminUser;
+//     }
+//   }
+// }
+
+// export const authenticateAdmin = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction
+// ) => {
+//   try {
+//     const token = req.cookies.adminToken;
+//     logger.debug("Authenticating request", { hasToken: !!token });
+
+//     if (!token) {
+//       return res.status(401).json({ error: "Authentication required" });
+//     }
+
+//     const decoded = jwt.verify(token, config.JWT_SECRET) as TokenPayload;
+//     logger.debug("Token verified", { email: decoded.adminemail });
+
+//     const adminUser = await AdminUser.findOne({
+//       _id: decoded.id,
+//       adminemail: decoded.adminemail,
+//       tokenVersion: decoded.tokenVersion,
+//     });
+
+//     if (!adminUser || adminUser.status !== "active") {
+//       logger.warn("Invalid admin access attempt", {
+//         id: decoded.id,
+//         email: decoded.adminemail,
+//       });
+//       return res.status(403).json({ error: "Admin access denied" });
+//     }
+
+//     req.adminuser = adminUser;
+//     next();
+//   } catch (error) {
+//     logger.error("Authentication error", { error });
+//     res.status(401).json({ error: "Invalid authentication" });
+//   }
+// };
+
+// export const isSuperAdmin = (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction
+// ) => {
+//   if (req.adminuser.adminrole !== "super_admin") {
+//     logger.warn("Unauthorized super admin access attempt", {
+//       id: req.adminuser._id,
+//       role: req.adminuser.adminrole,
+//     });
+//     return res.status(403).json({ error: "Super admin access required" });
+//   }
+//   next();
+// };
