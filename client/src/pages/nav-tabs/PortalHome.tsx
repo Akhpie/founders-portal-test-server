@@ -206,7 +206,7 @@ const DashboardLayout = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        "http://localhost:5000/api/resources/categories"
+        "https://founders-portal-test-server-apii.onrender.com/api/resources/categories"
       );
       setCategories(response.data);
     } catch (error) {
@@ -224,7 +224,7 @@ const DashboardLayout = () => {
     try {
       // First increment the download count regardless of source
       await axios.post(
-        `http://localhost:5000/api/resources/categories/${category._id}/resources/${item._id}/downloads`
+        `https://founders-portal-test-server-apii.onrender.com/api/resources/categories/${category._id}/resources/${item._id}/downloads`
       );
 
       if (item.fileSource === "drive" && item.driveLink) {
@@ -251,7 +251,7 @@ const DashboardLayout = () => {
         message.success("Google Drive file download initiated");
       } else if (item.fileUrl) {
         // For local files
-        const downloadUrl = `http://localhost:5000${item.fileUrl}?download=true`;
+        const downloadUrl = `https://founders-portal-test-server-apii.onrender.com${item.fileUrl}?download=true`;
 
         try {
           // Create a temporary anchor element for download
@@ -354,7 +354,7 @@ const DashboardLayout = () => {
 
     // Handle local files
     if (resource?.fileUrl) {
-      const fileUrl = `http://localhost:5000${resource.fileUrl}`;
+      const fileUrl = `https://founders-portal-test-server-apii.onrender.com${resource.fileUrl}`;
 
       switch (resource.fileType.toLowerCase()) {
         case "pdf":
@@ -428,40 +428,6 @@ const DashboardLayout = () => {
       </div>
     );
   };
-
-  // const getPreviewContent = (resource: ResourceItem | null) => {
-  //   if (!resource?.fileUrl) return null;
-
-  //   switch (resource.fileType.toLowerCase()) {
-  //     case "pdf":
-  //       return (
-  //         <iframe
-  //           src={`http://localhost:5000${resource.fileUrl}`}
-  //           style={{ width: "100%", height: "100%", border: "none" }}
-  //           title={resource.name}
-  //         />
-  //       );
-  //     case "doc":
-  //     case "docx":
-  //     case "xls":
-  //     case "xlsx":
-  //     case "ppt":
-  //     case "pptx":
-  //       return (
-  //         <div className="flex flex-col items-center justify-center h-full">
-  //           <FileOutlined style={{ fontSize: "48px", marginBottom: "16px" }} />
-  //           <Text>Preview not available for {resource.fileType} files.</Text>
-  //           <Text type="secondary">Please download to view the content.</Text>
-  //         </div>
-  //       );
-  //     default:
-  //       return (
-  //         <div className="flex flex-col items-center justify-center h-full">
-  //           <Text>Preview not available</Text>
-  //         </div>
-  //       );
-  //   }
-  // };
 
   const iconMap: { [key: string]: React.ReactNode } = {
     CodeOutlined: <CodeOutlined style={{ fontSize: "24px" }} />,
