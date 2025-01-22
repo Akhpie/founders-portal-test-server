@@ -6,6 +6,8 @@ export interface ResourceItem {
   fileType: string;
   preview: boolean;
   fileUrl?: string;
+  driveLink?: string;
+  fileSource?: "local" | "drive";
 }
 
 export interface ResourceCategory {

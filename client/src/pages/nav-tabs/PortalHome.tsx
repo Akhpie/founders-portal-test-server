@@ -28,6 +28,7 @@ import {
   EyeOutlined,
   TeamOutlined,
   FileOutlined,
+  LinkOutlined,
 } from "@ant-design/icons";
 import NewsDisplay from "../../components/News-api/NewsDisplay";
 import axios from "axios";
@@ -42,6 +43,8 @@ interface ResourceItem {
   fileType: string;
   preview: boolean;
   fileUrl?: string;
+  driveLink?: string;
+  fileSource?: "local" | "drive";
 }
 
 interface ResourceCategory {
@@ -203,7 +206,7 @@ const DashboardLayout = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        "https://founders-portal-test-server-apii.onrender.com/api/resources/categories"
+        "http://localhost:5000/api/resources/categories"
       );
       setCategories(response.data);
     } catch (error) {
@@ -219,105 +222,246 @@ const DashboardLayout = () => {
     item: ResourceItem
   ) => {
     try {
-      if (!item.fileUrl) {
+      // First increment the download count regardless of source
+      await axios.post(
+        `http://localhost:5000/api/resources/categories/${category._id}/resources/${item._id}/downloads`
+      );
+
+      if (item.fileSource === "drive" && item.driveLink) {
+        // For Google Drive files, extract the file ID and construct a direct download link
+        const fileId = item.driveLink.match(/[-\w]{25,}(?!.*[-\w]{25,})/)?.[0];
+        window.open(item.driveLink, "_blank");
+        message.success("Opening Google Drive file");
+
+        if (!fileId) {
+          message.error("Invalid Google Drive link");
+          return;
+        }
+
+        // Different handling based on file type
+        if (item.driveLink.includes("folders")) {
+          // If it's a folder, open in new tab
+          window.open(item.driveLink, "_blank");
+        } else {
+          // For files, attempt to force download
+          const downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
+          window.open(downloadUrl, "_blank");
+        }
+
+        message.success("Google Drive file download initiated");
+      } else if (item.fileUrl) {
+        // For local files
+        const downloadUrl = `http://localhost:5000${item.fileUrl}?download=true`;
+
+        try {
+          // Create a temporary anchor element for download
+          const link = document.createElement("a");
+          link.href = downloadUrl;
+          link.setAttribute("download", ""); // This will keep the original filename
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+
+          message.success("Download started");
+        } catch (downloadError) {
+          console.error("Download error:", downloadError);
+          // Fallback to opening in new tab if download fails
+          window.open(downloadUrl, "_blank");
+        }
+      } else {
         message.warning("No file available for download");
         return;
       }
 
-      // First increment the download count
-      await axios.post(
-        `https://founders-portal-test-server-apii.onrender.com/api/resources/categories/${category._id}/resources/${item._id}/downloads`
-      );
-
-      // Get file extension based on fileType
-      const getFileExtension = (fileType: string) => {
-        const extensionMap: { [key: string]: string } = {
-          PDF: ".pdf",
-          DOC: ".doc",
-          DOCX: ".docx",
-          XLS: ".xls",
-          XLSX: ".xlsx",
-          PPT: ".ppt",
-          PPTX: ".pptx",
-        };
-        return extensionMap[fileType] || "";
-      };
-
-      // Then download the file
-      const response = await axios.get(
-        `https://founders-portal-test-server-apii.onrender.com${item.fileUrl}`,
-        {
-          responseType: "blob",
-          headers: {
-            Accept: "application/octet-stream",
-          },
-        }
-      );
-
-      // Create download link with proper file extension
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute(
-        "download",
-        `${item.name}${getFileExtension(item.fileType)}`
-      );
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      window.URL.revokeObjectURL(url);
-
       // Refresh categories to update download count
       fetchCategories();
-      message.success("Download started");
     } catch (error) {
-      console.error("Error downloading file:", error);
-      message.error("Failed to download file");
+      console.error("Error during download:", error);
+      message.error("Failed to process download");
     }
   };
 
   const handlePreview = (item: ResourceItem) => {
-    if (item.fileUrl) {
-      setPreviewingResource(item);
-      setPreviewModalVisible(true);
-    } else {
-      message.warning("No preview available");
-    }
+    setPreviewingResource(item);
+    setPreviewModalVisible(true);
   };
 
+  // Replace the existing getPreviewContent function with this updated version
   const getPreviewContent = (resource: ResourceItem | null) => {
-    if (!resource?.fileUrl) return null;
+    // Handle Google Drive links
+    if (resource?.fileSource === "drive" && resource.driveLink) {
+      // Extract file ID from Google Drive link
+      const getFileId = (url: string) => {
+        const patterns = [/\/file\/d\/([^/]+)/, /id=([^&]+)/, /\/d\/([^/]+)/];
 
-    switch (resource.fileType.toLowerCase()) {
-      case "pdf":
-        return (
-          <iframe
-            src={`https://founders-portal-test-server-apii.onrender.com${resource.fileUrl}`}
-            style={{ width: "100%", height: "100%", border: "none" }}
-            title={resource.name}
-          />
-        );
-      case "doc":
-      case "docx":
-      case "xls":
-      case "xlsx":
-      case "ppt":
-      case "pptx":
+        for (const pattern of patterns) {
+          const match = url.match(pattern);
+          if (match && match[1]) return match[1];
+        }
+        return null;
+      };
+
+      const fileId = getFileId(resource.driveLink);
+      console.log("Drive File ID:", fileId);
+
+      if (!fileId) {
         return (
           <div className="flex flex-col items-center justify-center h-full">
-            <FileOutlined style={{ fontSize: "48px", marginBottom: "16px" }} />
-            <Text>Preview not available for {resource.fileType} files.</Text>
-            <Text type="secondary">Please download to view the content.</Text>
+            <LinkOutlined style={{ fontSize: "48px", marginBottom: "16px" }} />
+            <p>Unable to generate preview</p>
+            <a
+              href={resource.driveLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            >
+              Open in Google Drive
+            </a>
           </div>
         );
-      default:
-        return (
-          <div className="flex flex-col items-center justify-center h-full">
-            <Text>Preview not available</Text>
-          </div>
-        );
+      }
+
+      // Different preview handling based on file type
+      let embedUrl;
+      switch (resource.fileType.toLowerCase()) {
+        case "pdf":
+          embedUrl = `https://drive.google.com/file/d/${fileId}/preview`;
+          break;
+        case "doc":
+        case "docx":
+          embedUrl = `https://docs.google.com/document/d/${fileId}/preview`;
+          break;
+        case "ppt":
+        case "pptx":
+          embedUrl = `https://docs.google.com/presentation/d/${fileId}/preview`;
+          break;
+        case "xls":
+        case "xlsx":
+          embedUrl = `https://docs.google.com/spreadsheets/d/${fileId}/preview`;
+          break;
+        default:
+          embedUrl = `https://drive.google.com/file/d/${fileId}/preview`;
+      }
+      return (
+        <iframe
+          src={embedUrl}
+          style={{ width: "100%", height: "100%", border: "none" }}
+          title={resource.name}
+          allowFullScreen
+        />
+      );
     }
+
+    // Handle local files
+    if (resource?.fileUrl) {
+      const fileUrl = `http://localhost:5000${resource.fileUrl}`;
+
+      switch (resource.fileType.toLowerCase()) {
+        case "pdf":
+          return (
+            <iframe
+              src={fileUrl}
+              style={{ width: "100%", height: "100%", border: "none" }}
+              title={resource.name}
+            />
+          );
+        case "doc":
+        case "docx":
+        case "xls":
+        case "xlsx":
+        case "ppt":
+        case "pptx":
+          return (
+            <div className="flex flex-col items-center justify-center h-full">
+              <FileOutlined
+                style={{ fontSize: "48px", marginBottom: "16px" }}
+              />
+              <p>Preview not available for {resource.fileType} files</p>
+              <p className="mb-4">Please download to view the content</p>
+              <Button
+                type="primary"
+                icon={<DownloadOutlined />}
+                onClick={() => {
+                  const category = categories.find((cat) =>
+                    cat.items.some((item) => item._id === resource._id)
+                  );
+                  if (category) {
+                    handleDownload(category, resource);
+                  }
+                }}
+              >
+                Download to View
+              </Button>
+            </div>
+          );
+        case "jpg":
+        case "jpeg":
+        case "png":
+        case "gif":
+          return (
+            <img
+              src={fileUrl}
+              alt={resource.name}
+              style={{
+                maxWidth: "100%",
+                maxHeight: "100%",
+                objectFit: "contain",
+              }}
+            />
+          );
+        default:
+          return (
+            <div className="flex flex-col items-center justify-center h-full">
+              <FileOutlined
+                style={{ fontSize: "48px", marginBottom: "16px" }}
+              />
+              <p>Preview not available for this file type</p>
+            </div>
+          );
+      }
+    }
+
+    return (
+      <div className="flex flex-col items-center justify-center h-full">
+        <FileOutlined style={{ fontSize: "48px", marginBottom: "16px" }} />
+        <p>No preview available</p>
+      </div>
+    );
   };
+
+  // const getPreviewContent = (resource: ResourceItem | null) => {
+  //   if (!resource?.fileUrl) return null;
+
+  //   switch (resource.fileType.toLowerCase()) {
+  //     case "pdf":
+  //       return (
+  //         <iframe
+  //           src={`http://localhost:5000${resource.fileUrl}`}
+  //           style={{ width: "100%", height: "100%", border: "none" }}
+  //           title={resource.name}
+  //         />
+  //       );
+  //     case "doc":
+  //     case "docx":
+  //     case "xls":
+  //     case "xlsx":
+  //     case "ppt":
+  //     case "pptx":
+  //       return (
+  //         <div className="flex flex-col items-center justify-center h-full">
+  //           <FileOutlined style={{ fontSize: "48px", marginBottom: "16px" }} />
+  //           <Text>Preview not available for {resource.fileType} files.</Text>
+  //           <Text type="secondary">Please download to view the content.</Text>
+  //         </div>
+  //       );
+  //     default:
+  //       return (
+  //         <div className="flex flex-col items-center justify-center h-full">
+  //           <Text>Preview not available</Text>
+  //         </div>
+  //       );
+  //   }
+  // };
 
   const iconMap: { [key: string]: React.ReactNode } = {
     CodeOutlined: <CodeOutlined style={{ fontSize: "24px" }} />,

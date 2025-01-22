@@ -12,6 +12,7 @@ import {
   Popconfirm,
   ColorPicker,
   InputNumber,
+  Radio,
 } from "antd";
 import {
   PlusOutlined,
@@ -21,6 +22,7 @@ import {
   EyeOutlined,
   DownloadOutlined,
   FileOutlined,
+  LinkOutlined,
 } from "@ant-design/icons";
 import axios from "axios";
 import { ResourceCategory, ResourceItem } from "../../../types/resource";
@@ -30,6 +32,7 @@ const { Option } = Select;
 const ResourceManagement: React.FC = () => {
   // States for categories
   const [categories, setCategories] = useState<ResourceCategory[]>([]);
+  const [fileSource, setFileSource] = useState<"local" | "drive">("local");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [editingCategory, setEditingCategory] =
     useState<ResourceCategory | null>(null);
@@ -59,40 +62,147 @@ const ResourceManagement: React.FC = () => {
   };
 
   const getPreviewContent = (resource: ResourceItem) => {
-    const fileUrl = `https://founders-portal-test-server-apii.onrender.com${resource.fileUrl}`;
+    // Handle Google Drive links
+    if (resource.fileSource === "drive" && resource.driveLink) {
+      // Extract file ID from Google Drive link
+      const getFileId = (url: string) => {
+        const patterns = [/\/file\/d\/([^/]+)/, /id=([^&]+)/, /\/d\/([^/]+)/];
 
-    switch (resource.fileType.toLowerCase()) {
-      case "pdf":
-        return (
-          <iframe
-            src={fileUrl}
-            style={{ width: "100%", height: "100%", border: "none" }}
-            title={resource.name}
-          />
-        );
-      case "doc":
-      case "docx":
-      case "xls":
-      case "xlsx":
-      case "ppt":
-      case "pptx":
+        for (const pattern of patterns) {
+          const match = url.match(pattern);
+          if (match && match[1]) return match[1];
+        }
+        return null;
+      };
+
+      const fileId = getFileId(resource.driveLink);
+      console.log("Drive File ID:", fileId);
+
+      if (!fileId) {
         return (
           <div className="flex flex-col items-center justify-center h-full">
-            <FileOutlined style={{ fontSize: "48px", marginBottom: "16px" }} />
-            <p>Preview not available for {resource.fileType} files.</p>
-            <p>Please download to view the content.</p>
+            <LinkOutlined style={{ fontSize: "48px", marginBottom: "16px" }} />
+            <p>Unable to generate preview</p>
+            <a
+              href={resource.driveLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            >
+              Open in Google Drive
+            </a>
           </div>
         );
-      default:
-        return <p>Preview not available</p>;
+      }
+
+      // Different preview handling based on file type
+      let embedUrl;
+      switch (resource.fileType.toLowerCase()) {
+        case "pdf":
+          embedUrl = `https://drive.google.com/file/d/${fileId}/preview`;
+          break;
+        case "doc":
+        case "docx":
+          embedUrl = `https://docs.google.com/document/d/${fileId}/preview`;
+          break;
+        case "ppt":
+        case "pptx":
+          embedUrl = `https://docs.google.com/presentation/d/${fileId}/preview`;
+          break;
+        case "xls":
+        case "xlsx":
+          embedUrl = `https://docs.google.com/spreadsheets/d/${fileId}/preview`;
+          break;
+        default:
+          embedUrl = `https://drive.google.com/file/d/${fileId}/preview`;
+      }
+      return (
+        <iframe
+          src={embedUrl}
+          style={{ width: "100%", height: "100%", border: "none" }}
+          title={resource.name}
+          allowFullScreen
+        />
+      );
     }
+
+    // Handle local files
+    if (resource.fileUrl) {
+      const fileUrl = `http://localhost:5000${resource.fileUrl}`;
+
+      switch (resource.fileType.toLowerCase()) {
+        case "pdf":
+          return (
+            <iframe
+              src={fileUrl}
+              style={{ width: "100%", height: "100%", border: "none" }}
+              title={resource.name}
+            />
+          );
+        case "doc":
+        case "docx":
+        case "xls":
+        case "xlsx":
+        case "ppt":
+        case "pptx":
+          return (
+            <div className="flex flex-col items-center justify-center h-full">
+              <FileOutlined
+                style={{ fontSize: "48px", marginBottom: "16px" }}
+              />
+              <p>Preview not available for {resource.fileType} files</p>
+              <p className="mb-4">Please download to view the content</p>
+              <Button
+                type="primary"
+                icon={<DownloadOutlined />}
+                onClick={() =>
+                  handleResourceDownload(selectedCategory!, resource)
+                }
+              >
+                Download to View
+              </Button>
+            </div>
+          );
+        case "jpg":
+        case "jpeg":
+        case "png":
+        case "gif":
+          return (
+            <img
+              src={fileUrl}
+              alt={resource.name}
+              style={{
+                maxWidth: "100%",
+                maxHeight: "100%",
+                objectFit: "contain",
+              }}
+            />
+          );
+        default:
+          return (
+            <div className="flex flex-col items-center justify-center h-full">
+              <FileOutlined
+                style={{ fontSize: "48px", marginBottom: "16px" }}
+              />
+              <p>Preview not available for this file type</p>
+            </div>
+          );
+      }
+    }
+
+    return (
+      <div className="flex flex-col items-center justify-center h-full">
+        <FileOutlined style={{ fontSize: "48px", marginBottom: "16px" }} />
+        <p>No preview available</p>
+      </div>
+    );
   };
 
   const fetchCategories = async () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        "https://founders-portal-test-server-apii.onrender.com/api/resources/categories"
+        "http://localhost:5000/api/resources/categories"
       );
       const categoriesData = Array.isArray(response.data) ? response.data : [];
       const processedCategories = categoriesData.map((category) => ({
@@ -120,28 +230,62 @@ const ResourceManagement: React.FC = () => {
     item: ResourceItem
   ) => {
     try {
-      if (!item.fileUrl) {
+      // First increment the download count regardless of source
+      await axios.post(
+        `http://localhost:5000/api/resources/categories/${category._id}/resources/${item._id}/downloads`
+      );
+
+      if (item.fileSource === "drive" && item.driveLink) {
+        // For Google Drive files, extract the file ID and construct a direct download link
+        const fileId = item.driveLink.match(/[-\w]{25,}(?!.*[-\w]{25,})/)?.[0];
+        window.open(item.driveLink, "_blank");
+        message.success("Opening Google Drive file");
+
+        if (!fileId) {
+          message.error("Invalid Google Drive link");
+          return;
+        }
+
+        // Different handling based on file type
+        if (item.driveLink.includes("folders")) {
+          // If it's a folder, open in new tab
+          window.open(item.driveLink, "_blank");
+        } else {
+          // For files, attempt to force download
+          const downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
+          window.open(downloadUrl, "_blank");
+        }
+
+        message.success("Google Drive file download initiated");
+      } else if (item.fileUrl) {
+        // For local files
+        const downloadUrl = `http://localhost:5000${item.fileUrl}?download=true`;
+
+        try {
+          // Create a temporary anchor element for download
+          const link = document.createElement("a");
+          link.href = downloadUrl;
+          link.setAttribute("download", ""); // This will keep the original filename
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+
+          message.success("Download started");
+        } catch (downloadError) {
+          console.error("Download error:", downloadError);
+          // Fallback to opening in new tab if download fails
+          window.open(downloadUrl, "_blank");
+        }
+      } else {
         message.warning("No file available for download");
         return;
       }
 
-      // First increment the download count
-      await axios.post(
-        `https://founders-portal-test-server-apii.onrender.com/api/resources/categories/${category._id}/resources/${item._id}/downloads`
-      );
-
-      // Use window.open for direct download instead of axios
-      window.open(
-        `https://founders-portal-test-server-apii.onrender.com${item.fileUrl}?download=true`,
-        "_blank"
-      );
-
-      // Refresh to update download count
+      // Refresh categories to update download count
       fetchCategories();
-      message.success("Download started");
     } catch (error) {
-      console.error("Download error:", error);
-      message.error("Failed to download file");
+      console.error("Error during download:", error);
+      message.error("Failed to process download");
     }
   };
 
@@ -158,7 +302,7 @@ const ResourceManagement: React.FC = () => {
   const handleDeleteCategory = async (categoryId: string) => {
     try {
       await axios.delete(
-        `https://founders-portal-test-server-apii.onrender.com/api/resources/categories/${categoryId}`
+        `http://localhost:5000/api/resources/categories/${categoryId}`
       );
       message.success("Category deleted successfully");
       fetchCategories();
@@ -166,41 +310,6 @@ const ResourceManagement: React.FC = () => {
       message.error("Failed to delete category");
     }
   };
-
-  // const handleCategoryModalSubmit = async (values: any) => {
-  //   try {
-  //     const categoryData = {
-  //       ...values,
-  //       items: values.items || [],
-  //       // Handle both string and ColorPicker color values
-  //       color:
-  //         typeof values.color === "string"
-  //           ? values.color
-  //           : values.color?.toHexString() || "#1890ff",
-  //     };
-
-  //     if (editingCategory?._id) {
-  //       await axios.put(
-  //         `https://founders-portal-test-server-apii.onrender.com/api/resources/categories/${editingCategory._id}`,
-  //         categoryData
-  //       );
-  //       message.success("Category updated successfully");
-  //     } else {
-  //       await axios.post(
-  //         "https://founders-portal-test-server-apii.onrender.com/api/resources/categories",
-  //         categoryData
-  //       );
-  //       message.success("Category added successfully");
-  //     }
-
-  //     setIsModalVisible(false);
-  //     categoryForm.resetFields();
-  //     fetchCategories();
-  //   } catch (error) {
-  //     console.error("Error saving category:", error);
-  //     message.error("Failed to save category");
-  //   }
-  // };
 
   const handleCategoryModalSubmit = async (values: any) => {
     try {
@@ -216,7 +325,7 @@ const ResourceManagement: React.FC = () => {
       if (editingCategory?._id) {
         // Update existing category
         await axios.put(
-          `https://founders-portal-test-server-apii.onrender.com/api/resources/categories/${editingCategory._id}`,
+          `http://localhost:5000/api/resources/categories/${editingCategory._id}`,
           categoryData
         );
         message.success("Category updated successfully");
@@ -224,7 +333,7 @@ const ResourceManagement: React.FC = () => {
       } else {
         // Add new category
         const response = await axios.post(
-          "https://founders-portal-test-server-apii.onrender.com/api/resources/categories",
+          "http://localhost:5000/api/resources/categories",
           categoryData
         );
         const newCategory = response.data;
@@ -273,7 +382,7 @@ const ResourceManagement: React.FC = () => {
   ) => {
     try {
       await axios.delete(
-        `https://founders-portal-test-server-apii.onrender.com/api/resources/categories/${categoryId}/resources/${resourceId}`
+        `http://localhost:5000/api/resources/categories/${categoryId}/resources/${resourceId}`
       );
       message.success("Resource deleted successfully");
       fetchCategories();
@@ -284,43 +393,69 @@ const ResourceManagement: React.FC = () => {
 
   const handleResourceModalSubmit = async (values: any) => {
     try {
-      const formData = new FormData();
+      if (fileSource === "local") {
+        // Handle local file upload (existing logic)
+        const formData = new FormData();
+        formData.append("name", values.name);
+        formData.append("fileType", values.fileType);
+        formData.append("rating", values.rating.toString());
+        formData.append("preview", String(values.preview));
 
-      // Add all the non-file fields
-      formData.append("name", values.name);
-      formData.append("fileType", values.fileType);
-      formData.append("rating", values.rating.toString());
-      formData.append("preview", values.preview.toString());
+        if (values.file?.fileList?.[0]?.originFileObj) {
+          formData.append("file", values.file.fileList[0].originFileObj);
+        }
 
-      // Handle file upload
-      if (values.file?.fileList?.[0]?.originFileObj) {
-        formData.append("file", values.file.fileList[0].originFileObj);
-      }
-
-      if (editingResource?._id) {
-        await axios.put(
-          `https://founders-portal-test-server-apii.onrender.com/api/resources/categories/${selectedCategory?._id}/resources/${editingResource._id}`,
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-        message.success("Resource updated successfully");
+        if (editingResource?._id) {
+          await axios.put(
+            `http://localhost:5000/api/resources/categories/${selectedCategory?._id}/resources/${editingResource._id}`,
+            formData,
+            {
+              headers: { "Content-Type": "multipart/form-data" },
+            }
+          );
+        } else {
+          await axios.post(
+            `http://localhost:5000/api/resources/categories/${selectedCategory?._id}/resources`,
+            formData,
+            {
+              headers: { "Content-Type": "multipart/form-data" },
+            }
+          );
+        }
       } else {
-        await axios.post(
-          `https://founders-portal-test-server-apii.onrender.com/api/resources/categories/${selectedCategory?._id}/resources`,
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-        message.success("Resource added successfully");
+        // Handle Google Drive link
+        const resourceData = {
+          name: values.name,
+          fileType: values.fileType,
+          rating: values.rating,
+          preview: values.preview,
+          driveLink: values.driveLink,
+          fileSource: "drive",
+        };
+        console.log("Submitting Drive resource:", resourceData);
+
+        if (editingResource?._id) {
+          await axios.put(
+            `http://localhost:5000/api/resources/categories/${selectedCategory?._id}/resources/${editingResource._id}`,
+            resourceData,
+            {
+              headers: { "Content-Type": "application/json" },
+            }
+          );
+        } else {
+          await axios.post(
+            `http://localhost:5000/api/resources/categories/${selectedCategory?._id}/resources`,
+            resourceData,
+            {
+              headers: { "Content-Type": "application/json" },
+            }
+          );
+        }
       }
 
+      message.success(
+        `Resource ${editingResource ? "updated" : "added"} successfully`
+      );
       setIsResourceModalVisible(false);
       resourceForm.resetFields();
       fetchCategories();
@@ -560,20 +695,53 @@ const ResourceManagement: React.FC = () => {
             </Select>
           </Form.Item>
 
-          <Form.Item
-            name="file"
-            label="Upload File"
-            rules={[{ required: !editingResource }]}
-            valuePropName="file"
-          >
-            <Upload
-              maxCount={1}
-              beforeUpload={() => false}
-              accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx"
+          <Form.Item name="fileSource" label="File Source">
+            <Radio.Group
+              onChange={(e) => setFileSource(e.target.value)}
+              value={fileSource}
             >
-              <Button icon={<UploadOutlined />}>Select File</Button>
-            </Upload>
+              <Radio.Button value="local">Upload File</Radio.Button>
+              <Radio.Button value="drive">Google Drive Link</Radio.Button>
+            </Radio.Group>
           </Form.Item>
+
+          {fileSource === "local" ? (
+            <Form.Item
+              name="file"
+              label="Upload File"
+              rules={[{ required: !editingResource }]}
+              valuePropName="file"
+            >
+              <Upload
+                maxCount={1}
+                beforeUpload={() => false}
+                accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx"
+              >
+                <Button icon={<UploadOutlined />}>Select File</Button>
+              </Upload>
+            </Form.Item>
+          ) : (
+            <Form.Item
+              name="driveLink"
+              label="Google Drive Link"
+              rules={[
+                {
+                  required: true,
+                  message: "Please enter the Google Drive link",
+                },
+                {
+                  type: "url",
+                  message: "Please enter a valid URL",
+                },
+                {
+                  pattern: /^https:\/\/drive\.google\.com\/.*/,
+                  message: "Please enter a valid Google Drive link",
+                },
+              ]}
+            >
+              <Input placeholder="https://drive.google.com/..." />
+            </Form.Item>
+          )}
 
           <Form.Item>
             <div className="flex justify-end">

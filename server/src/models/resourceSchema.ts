@@ -4,10 +4,12 @@ const resourceItemSchema = new mongoose.Schema({
   name: { type: String, required: true },
   // downloads: { type: String, required: true },
   downloads: { type: Number, default: 0 },
-  rating: { type: Number, required: true },
+  rating: { type: Number, required: false },
   fileType: { type: String, required: true },
   preview: { type: Boolean, default: false },
   fileUrl: { type: String },
+  driveLink: { type: String },
+  fileSource: { type: String, enum: ["local", "drive"], required: true },
 });
 
 const resourceCategorySchema = new mongoose.Schema({

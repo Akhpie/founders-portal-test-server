@@ -68,25 +68,40 @@ export const resourceController = {
     }
   },
 
-  // New resource management methods
   addResource: async (req: Request, res: Response): Promise<void> => {
     try {
       const { categoryId } = req.params;
-      console.log("File received:", req.file);
-      const fileUrl = req.file ? `/resuploads/${req.file.filename}` : undefined;
+
+      let resourceData;
+      if (req.file) {
+        // Handle local file upload
+        resourceData = {
+          name: req.body.name,
+          fileType: req.body.fileType,
+          rating: Number(req.body.rating),
+          preview: req.body.preview === "true",
+          downloads: 0,
+          fileUrl: `/resuploads/${req.file.filename}`,
+          fileSource: "local",
+        };
+      } else {
+        // Handle Google Drive link
+        resourceData = {
+          name: req.body.name,
+          fileType: req.body.fileType,
+          rating: Number(req.body.rating),
+          preview: req.body.preview, // Should be received as boolean
+          downloads: 0,
+          driveLink: req.body.driveLink,
+          fileSource: "drive",
+        };
+      }
 
       const category = await ResourceCategory.findByIdAndUpdate(
         categoryId,
         {
           $push: {
-            items: {
-              name: req.body.name,
-              fileType: req.body.fileType,
-              rating: Number(req.body.rating),
-              preview: req.body.preview === "true",
-              downloads: 0,
-              fileUrl,
-            },
+            items: resourceData,
           },
         },
         { new: true }
@@ -108,7 +123,23 @@ export const resourceController = {
   updateResource: async (req: Request, res: Response): Promise<void> => {
     try {
       const { categoryId, resourceId } = req.params;
-      const fileUrl = req.file ? `/resuploads/${req.file.filename}` : undefined;
+      let updateData: any = {
+        "items.$.name": req.body.name,
+        "items.$.fileType": req.body.fileType,
+        "items.$.rating": Number(req.body.rating),
+        "items.$.preview": req.body.preview === "true",
+      };
+
+      // Handle file update scenarios
+      if (req.file) {
+        updateData["items.$.fileUrl"] = `/resuploads/${req.file.filename}`;
+        updateData["items.$.fileSource"] = "local";
+        updateData["items.$.driveLink"] = null;
+      } else if (req.body.driveLink) {
+        updateData["items.$.driveLink"] = req.body.driveLink;
+        updateData["items.$.fileSource"] = "drive";
+        updateData["items.$.fileUrl"] = null;
+      }
 
       const category = await ResourceCategory.findOneAndUpdate(
         {
@@ -116,13 +147,7 @@ export const resourceController = {
           "items._id": resourceId,
         },
         {
-          $set: {
-            "items.$.name": req.body.name,
-            "items.$.fileType": req.body.fileType,
-            "items.$.rating": Number(req.body.rating),
-            "items.$.preview": req.body.preview === "true",
-            ...(fileUrl && { "items.$.fileUrl": fileUrl }),
-          },
+          $set: updateData,
         },
         { new: true }
       );
