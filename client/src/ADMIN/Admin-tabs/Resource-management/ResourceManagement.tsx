@@ -128,7 +128,7 @@ const ResourceManagement: React.FC = () => {
 
     // Handle local files
     if (resource.fileUrl) {
-      const fileUrl = `http://localhost:5000${resource.fileUrl}`;
+      const fileUrl = `https://founders-portal-test-server-apii.onrender.com${resource.fileUrl}`;
 
       switch (resource.fileType.toLowerCase()) {
         case "pdf":
@@ -202,7 +202,7 @@ const ResourceManagement: React.FC = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        "http://localhost:5000/api/resources/categories"
+        "https://founders-portal-test-server-apii.onrender.com/api/resources/categories"
       );
       const categoriesData = Array.isArray(response.data) ? response.data : [];
       const processedCategories = categoriesData.map((category) => ({
@@ -232,7 +232,7 @@ const ResourceManagement: React.FC = () => {
     try {
       // First increment the download count regardless of source
       await axios.post(
-        `http://localhost:5000/api/resources/categories/${category._id}/resources/${item._id}/downloads`
+        `https://founders-portal-test-server-apii.onrender.com/api/resources/categories/${category._id}/resources/${item._id}/downloads`
       );
 
       if (item.fileSource === "drive" && item.driveLink) {
@@ -259,7 +259,7 @@ const ResourceManagement: React.FC = () => {
         message.success("Google Drive file download initiated");
       } else if (item.fileUrl) {
         // For local files
-        const downloadUrl = `http://localhost:5000${item.fileUrl}?download=true`;
+        const downloadUrl = `https://founders-portal-test-server-apii.onrender.com${item.fileUrl}?download=true`;
 
         try {
           // Create a temporary anchor element for download
@@ -302,7 +302,7 @@ const ResourceManagement: React.FC = () => {
   const handleDeleteCategory = async (categoryId: string) => {
     try {
       await axios.delete(
-        `http://localhost:5000/api/resources/categories/${categoryId}`
+        `https://founders-portal-test-server-apii.onrender.com/api/resources/categories/${categoryId}`
       );
       message.success("Category deleted successfully");
       fetchCategories();
@@ -325,7 +325,7 @@ const ResourceManagement: React.FC = () => {
       if (editingCategory?._id) {
         // Update existing category
         await axios.put(
-          `http://localhost:5000/api/resources/categories/${editingCategory._id}`,
+          `https://founders-portal-test-server-apii.onrender.com/api/resources/categories/${editingCategory._id}`,
           categoryData
         );
         message.success("Category updated successfully");
@@ -333,7 +333,7 @@ const ResourceManagement: React.FC = () => {
       } else {
         // Add new category
         const response = await axios.post(
-          "http://localhost:5000/api/resources/categories",
+          "https://founders-portal-test-server-apii.onrender.com/api/resources/categories",
           categoryData
         );
         const newCategory = response.data;
@@ -382,7 +382,7 @@ const ResourceManagement: React.FC = () => {
   ) => {
     try {
       await axios.delete(
-        `http://localhost:5000/api/resources/categories/${categoryId}/resources/${resourceId}`
+        `https://founders-portal-test-server-apii.onrender.com/api/resources/categories/${categoryId}/resources/${resourceId}`
       );
       message.success("Resource deleted successfully");
       fetchCategories();
@@ -407,7 +407,7 @@ const ResourceManagement: React.FC = () => {
 
         if (editingResource?._id) {
           await axios.put(
-            `http://localhost:5000/api/resources/categories/${selectedCategory?._id}/resources/${editingResource._id}`,
+            `https://founders-portal-test-server-apii.onrender.com/api/resources/categories/${selectedCategory?._id}/resources/${editingResource._id}`,
             formData,
             {
               headers: { "Content-Type": "multipart/form-data" },
@@ -415,7 +415,7 @@ const ResourceManagement: React.FC = () => {
           );
         } else {
           await axios.post(
-            `http://localhost:5000/api/resources/categories/${selectedCategory?._id}/resources`,
+            `https://founders-portal-test-server-apii.onrender.com/api/resources/categories/${selectedCategory?._id}/resources`,
             formData,
             {
               headers: { "Content-Type": "multipart/form-data" },
@@ -436,7 +436,7 @@ const ResourceManagement: React.FC = () => {
 
         if (editingResource?._id) {
           await axios.put(
-            `http://localhost:5000/api/resources/categories/${selectedCategory?._id}/resources/${editingResource._id}`,
+            `https://founders-portal-test-server-apii.onrender.com/api/resources/categories/${selectedCategory?._id}/resources/${editingResource._id}`,
             resourceData,
             {
               headers: { "Content-Type": "application/json" },
@@ -444,7 +444,7 @@ const ResourceManagement: React.FC = () => {
           );
         } else {
           await axios.post(
-            `http://localhost:5000/api/resources/categories/${selectedCategory?._id}/resources`,
+            `https://founders-portal-test-server-apii.onrender.com/api/resources/categories/${selectedCategory?._id}/resources`,
             resourceData,
             {
               headers: { "Content-Type": "application/json" },
