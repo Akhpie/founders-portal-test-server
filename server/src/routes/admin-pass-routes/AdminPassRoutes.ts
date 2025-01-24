@@ -25,7 +25,7 @@ const verifyAdminPasswordHandler = async (
     );
 
     if (isValidPassword) {
-      const token = jwt.sign({ admin: true }, JWT_SECRET, { expiresIn: "30m" });
+      const token = jwt.sign({ admin: true }, JWT_SECRET, { expiresIn: "10m" });
 
       res.status(200).json({
         success: true,
