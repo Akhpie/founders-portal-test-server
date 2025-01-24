@@ -32,6 +32,7 @@ const templateRoutes = require("./routes/template-routes/templateRoutes");
 const resourceRoutes = require("./routes/resource-routes/resourceRoutes");
 const influencerRoutes = require("./routes/influencer-routes/influencerRoutes");
 const StartupInfluencerRoutes = require("./routes/influencer-routes/StartupInfluencerRoutes");
+const AdminPassRoutes = require("./routes/admin-pass-routes/AdminPassRoutes");
 
 dotenv_1.default.config();
 
@@ -72,6 +73,7 @@ app.use("/api", templateRoutes);
 app.use("/api/resources", resourceRoutes);
 app.use("/api/influencers", influencerRoutes);
 app.use("/api/startup-influencers", StartupInfluencerRoutes);
+app.use("/api/admin", AdminPassRoutes);
 
 // Basic Route
 app.get("/", (req, res) => {

@@ -40,6 +40,8 @@ import StartupInfluencerManagement from "../ADMIN/Admin-tabs/influencer-manageme
 import AngelManagement from "../ADMIN/Admin-tabs/angel-management/AngelManagement";
 import AngelDetail from "../pages/detail-page/AngelDetail";
 import SeedDetail from "../pages/detail-page/SeedDetail";
+import ProtectedAdminRoute from "../components/Admin-security/AdminRouteProtection";
+import AdminPasswordPage from "../components/Admin-security/AdminPasswordPage";
 
 export const router = createBrowserRouter([
   {
@@ -73,6 +75,10 @@ export const router = createBrowserRouter([
   {
     path: "/company-details",
     element: <CompanyDetailsForm />,
+  },
+  {
+    path: "/admin-password",
+    element: <AdminPasswordPage />,
   },
   {
     path: "/portal",
@@ -156,7 +162,11 @@ export const router = createBrowserRouter([
   },
   {
     path: "/admin",
-    element: <AdminLogin />,
+    element: (
+      <ProtectedAdminRoute>
+        <AdminLogin />
+      </ProtectedAdminRoute>
+    ),
   },
   {
     path: "/adminPortal",

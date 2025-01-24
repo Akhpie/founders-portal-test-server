@@ -390,23 +390,6 @@ export default function PortalLayout() {
           </Header>
 
           {/* Main Content */}
-          {/* <Content
-            className={`m-6 p-6 rounded-lg relative ${
-              isDark ? "" : "bg-white"
-            }`}
-            style={
-              isDark
-                ? {
-                    backgroundImage: `url(${svgbg})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    backgroundRepeat: "no-repeat",
-                  }
-                : {}
-            }
-          >
-            <Outlet />
-          </Content> */}
           <Content
             className={`m-6 p-6 rounded-lg relative ${
               isDark ? "background-image-class" : "bg-white"

@@ -22,6 +22,7 @@ import StartupInfluencerRoutes from "./routes/influencer-routes/StartupInfluence
 import AngelRoutes from "./routes/angel-routes/AngelRoutes";
 import preSeedRoutes from "./routes/preSeed-routes/preSeedRoutes";
 import seedRoutes from "./routes/Seed-Routes/seedRoutes";
+import AdminPassRoutes from "./routes/admin-pass-routes/AdminPassRoutes";
 
 dotenv.config();
 
@@ -90,6 +91,7 @@ app.use("/api", templateRoutes);
 app.use("/api/resources", resourceRoutes);
 app.use("/api/influencers", influencerRoutes);
 app.use("/api/startup-influencers", StartupInfluencerRoutes);
+app.use("/api/admin", AdminPassRoutes);
 
 app.use("/resuploads", (req, res, next) => {
   // Check if it's a download request
